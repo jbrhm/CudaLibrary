@@ -3,13 +3,14 @@
 #include <iostream>
 
 int main(){
-	Matrix m1(3);
+	unsigned int size = 1000;
+	Matrix m1(size);
 
 	// Matrix 2
-	double* data = new double[9]{2,0,0,0,2,0,0,0,2};
-	Matrix m2(3, data);
+	float* data = new float[9]{2,0,0,0,2,0,0,0,2};
+	Matrix m2(size);
 
-	Matrix m3(3);
+	Matrix m3(size);
 
 	Matrix::multiply(m1, m2, m3);
 

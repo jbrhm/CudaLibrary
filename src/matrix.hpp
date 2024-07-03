@@ -13,19 +13,19 @@ private:
 
 	unsigned int mN;
 
-	double* mMatrix;
+	float* mMatrix;
 
 public:
 
 	Matrix(unsigned int N);
 
-	Matrix(unsigned int N, double* data);
+	Matrix(unsigned int N, float* data);
 
 	unsigned int getSize() const;
 
-	double& at(unsigned int row, unsigned int col);
+	float& at(unsigned int row, unsigned int col);
 
-	double const& at(unsigned int row, unsigned int col) const;
+	float const& at(unsigned int row, unsigned int col) const;
 
 	void sync();
 

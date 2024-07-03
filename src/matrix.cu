@@ -2,7 +2,7 @@
 
 #include "cuda_matrix.cuh"
 
-Matrix::Matrix(unsigned int N) : mCuMatrix{nullptr}, mN{N}, mMatrix{static_cast<double*>(malloc(mN * mN * sizeof(double)))} {
+Matrix::Matrix(unsigned int N) : mCuMatrix{nullptr}, mN{N}, mMatrix{static_cast<float*>(malloc(mN * mN * sizeof(float)))} {
 	// Init the Identity Matrix
 	for(int row = 0; row < mN; ++row){
 		for(int col = 0; col < mN; ++col){
@@ -13,7 +13,7 @@ Matrix::Matrix(unsigned int N) : mCuMatrix{nullptr}, mN{N}, mMatrix{static_cast<
 	mCuMatrix = new cudaMatrix(mN, mMatrix);
 }
 
-Matrix::Matrix(unsigned int N, double* data) : mCuMatrix{nullptr}, mN{N}, mMatrix{static_cast<double*>(malloc(mN * mN * sizeof(double)))} {
+Matrix::Matrix(unsigned int N, float* data) : mCuMatrix{nullptr}, mN{N}, mMatrix{static_cast<float*>(malloc(mN * mN * sizeof(float)))} {
 	// Init the Identity Matrix
 	for(int row = 0; row < mN; ++row){
 		for(int col = 0; col < mN; ++col){
@@ -32,11 +32,11 @@ Matrix::~Matrix(){
 	free(mMatrix);
 }
 
-double& Matrix::at(unsigned int row, unsigned int col){
+float& Matrix::at(unsigned int row, unsigned int col){
 	return mMatrix[row * mN + col];
 }
 
-double const& Matrix::at(unsigned int row, unsigned int col) const{
+float const& Matrix::at(unsigned int row, unsigned int col) const{
 	return mMatrix[row * mN + col];
 }
 

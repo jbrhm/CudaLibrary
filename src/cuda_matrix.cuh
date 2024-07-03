@@ -8,12 +8,12 @@ class cudaMatrix {
 private:
 	unsigned int mN;
 
-	double* mData;
+	float* mData;
 
 public:
-	cudaMatrix(unsigned int N, double* data);
+	cudaMatrix(unsigned int N, float* data);
 
-	void syncHost(double* hostData);
+	void syncHost(float* hostData);
 
 	static void multiply(cudaMatrix &matA, cudaMatrix &matB, cudaMatrix &matC);
 
