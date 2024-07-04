@@ -35,6 +35,8 @@ public:
 
 	static void report();
 
+	static void measureFLOPS(Matrix &matA, Matrix &matB, Matrix &matC, bool isCuBLAS);
+
 	~Matrix();
 };
 

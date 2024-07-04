@@ -18,6 +18,10 @@ int main(){
 
 	Matrix::report();
 
+	Matrix::measureFLOPS(m1, m2, m3, false);
+
+	Matrix::measureFLOPS(m1, m2, m3, true);
+
 	m3.sync();
 
 	return EXIT_SUCCESS;

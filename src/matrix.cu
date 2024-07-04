@@ -57,6 +57,10 @@ void Matrix::report(){
 	cudaMatrix::report("cuBLAS");
 }
 
+void Matrix::measureFLOPS(Matrix &matA, Matrix &matB, Matrix &matC, bool isCuBLAS){
+	cudaMatrix::measureFLOPS(*matA.mCuMatrix, *matB.mCuMatrix, *matC.mCuMatrix, isCuBLAS);
+}
+
 std::ostream& operator<<(std::ostream& os, Matrix const& matrix){
 	std::size_t const N = matrix.getSize();
 

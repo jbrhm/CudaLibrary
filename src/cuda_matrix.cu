@@ -80,7 +80,34 @@ void cudaMatrix::cublasSGEMM(cudaMatrix &matA, cudaMatrix &matB, cudaMatrix &mat
 }
 
 void cudaMatrix::report(std::string const& name){
-	std::cout << " has had an average performance of " << name << " " << mLoopProfiler.avg(name) << " seconds and " << 0 << " GFLOPS\n";
+	std::cout << " has had an average performance of " << name << " " << mLoopProfiler.avg(name) << " seconds\n";
+}
+
+void cudaMatrix::measureFLOPS(cudaMatrix &matA, cudaMatrix &matB, cudaMatrix &matC, bool isCuBLAS){
+	size_t flops = 2 * matA.mN * matA.mN * matA.mN;
+
+	constexpr unsigned int iterations = 1000;
+
+	std::chrono::time_point<std::chrono::system_clock> start = std::chrono::system_clock::now();
+
+	if(isCuBLAS){
+		for (size_t i = 0; i < iterations; ++i) {
+			cudaMatrix::cublasSGEMM(matA, matB, matC);
+		}
+	}else{
+		for (size_t i = 0; i < iterations; ++i) {
+			cudaMatrix::mySGEMM(matA, matB, matC);
+		}
+	}
+
+	std::chrono::duration<double> elapsedSeconds = std::chrono::system_clock::now() - start;
+
+	double GFLOPS = (iterations * flops * 1e-9) / elapsedSeconds.count();
+	if(isCuBLAS){
+		std::cout << "cuBLAS " << GFLOPS << " GFLOPS\n";
+	}else{
+		std::cout << "my " << GFLOPS << " GFLOPS\n";
+	}
 }
 
 cudaMatrix::~cudaMatrix(){

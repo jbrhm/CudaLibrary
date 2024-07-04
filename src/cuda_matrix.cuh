@@ -5,6 +5,7 @@
 #include <cmath>
 #include <iostream>
 #include <string>
+#include <chrono>
 
 #include "loop_profiler.hpp"
 
@@ -26,6 +27,8 @@ public:
 	static void cublasSGEMM(cudaMatrix &matA, cudaMatrix &matB, cudaMatrix &matC);
 
 	static void report(std::string const& name);
+
+	static void measureFLOPS(cudaMatrix &matA, cudaMatrix &matB, cudaMatrix &matC, bool isCuBLAS);
 
 	~cudaMatrix();
 };
