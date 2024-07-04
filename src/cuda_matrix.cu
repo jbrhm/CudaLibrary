@@ -1,5 +1,7 @@
 #include "cuda_matrix.cuh"
 
+LoopProfiler cudaMatrix::mLoopProfiler{};
+
 template<unsigned int TILE_DIM>
 __global__ void rowColProduct(float* dataA, float* dataB, float* dataC, unsigned int N){
 
@@ -48,7 +50,7 @@ void cudaMatrix::syncHost(float* hostData){
 	cudaMemcpy(hostData, mData, mN * mN * sizeof(float), cudaMemcpyDeviceToHost);
 }
 
-void cudaMatrix::multiply(cudaMatrix &matA, cudaMatrix &matB, cudaMatrix &matC){
+void cudaMatrix::mySGEMM(cudaMatrix &matA, cudaMatrix &matB, cudaMatrix &matC){
 
 	constexpr unsigned int BLOCK_DIM = 32;
 	constexpr dim3 blockDimension{BLOCK_DIM, BLOCK_DIM};
@@ -56,7 +58,29 @@ void cudaMatrix::multiply(cudaMatrix &matA, cudaMatrix &matB, cudaMatrix &matC){
 
 	if(matA.mN != matB.mN || matA.mN != matC.mN) throw std::runtime_error("Matrices are not the same size!");
 
+	mLoopProfiler.start("my");
+
 	rowColProduct<BLOCK_DIM><<<gridDimension, blockDimension>>>(matA.mData, matB.mData, matC.mData, matA.mN);
+
+	mLoopProfiler.finish("my");
+}
+
+void cudaMatrix::cublasSGEMM(cudaMatrix &matA, cudaMatrix &matB, cudaMatrix &matC){
+	cublasHandle_t handle;
+	cublasCreate(&handle);
+
+	const float alpha = 1.0f;
+	const float beta = 0.0f;
+
+	mLoopProfiler.start("cuBLAS");
+
+	cublasSgemm(handle, CUBLAS_OP_N, CUBLAS_OP_N, matA.mN, matA.mN, matA.mN, &alpha, matA.mData, matA.mN, matB.mData, matA.mN, &beta, matC.mData, matA.mN);
+
+	mLoopProfiler.finish("cuBLAS");
+}
+
+void cudaMatrix::report(std::string const& name){
+	std::cout << " has had an average performance of " << name << " " << mLoopProfiler.avg(name) << " seconds and " << 0 << " GFLOPS\n";
 }
 
 cudaMatrix::~cudaMatrix(){

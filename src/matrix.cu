@@ -44,8 +44,17 @@ void Matrix::sync(){
 	mCuMatrix->syncHost(mMatrix);
 }
 
-void Matrix::multiply(Matrix &matA, Matrix &matB, Matrix &matC){
-	cudaMatrix::multiply(*matA.mCuMatrix, *matB.mCuMatrix, *matC.mCuMatrix);
+void Matrix::mySGEMM(Matrix &matA, Matrix &matB, Matrix &matC){
+	cudaMatrix::mySGEMM(*matA.mCuMatrix, *matB.mCuMatrix, *matC.mCuMatrix);
+}
+
+void Matrix::cublasSGEMM(Matrix &matA, Matrix &matB, Matrix &matC){
+	cudaMatrix::cublasSGEMM(*matA.mCuMatrix, *matB.mCuMatrix, *matC.mCuMatrix);
+}
+
+void Matrix::report(){
+	cudaMatrix::report("my");
+	cudaMatrix::report("cuBLAS");
 }
 
 std::ostream& operator<<(std::ostream& os, Matrix const& matrix){

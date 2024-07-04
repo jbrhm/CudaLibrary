@@ -29,7 +29,11 @@ public:
 
 	void sync();
 
-	static void multiply(Matrix &matA, Matrix &matB, Matrix &matC);
+	static void mySGEMM(Matrix &matA, Matrix &matB, Matrix &matC);
+
+	static void cublasSGEMM(Matrix &matA, Matrix &matB, Matrix &matC);
+
+	static void report();
 
 	~Matrix();
 };

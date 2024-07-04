@@ -1,8 +1,12 @@
 #pragma once
 #include <cuda_runtime.h>
+#include <cublas_v2.h>
 #include <stdexcept>
 #include <cmath>
 #include <iostream>
+#include <string>
+
+#include "loop_profiler.hpp"
 
 class cudaMatrix {
 private:
@@ -10,12 +14,18 @@ private:
 
 	float* mData;
 
+	static LoopProfiler mLoopProfiler;
+
 public:
 	cudaMatrix(unsigned int N, float* data);
 
 	void syncHost(float* hostData);
 
-	static void multiply(cudaMatrix &matA, cudaMatrix &matB, cudaMatrix &matC);
+	static void mySGEMM(cudaMatrix &matA, cudaMatrix &matB, cudaMatrix &matC);
+
+	static void cublasSGEMM(cudaMatrix &matA, cudaMatrix &matB, cudaMatrix &matC);
+
+	static void report(std::string const& name);
 
 	~cudaMatrix();
 };

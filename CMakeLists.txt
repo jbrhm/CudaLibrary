@@ -16,6 +16,10 @@ message("We are building using ${srcs}")
 
 add_executable(mat ${srcs})
 
-target_include_directories(mat PUBLIC .)
+target_include_directories(mat PRIVATE utils/)
+
+target_link_libraries(mat PRIVATE cublas)
+
+target_compile_options(mat PUBLIC -g3)
 
 set_target_properties(mat PROPERTIES LINKER_LANGUAGE CXX)

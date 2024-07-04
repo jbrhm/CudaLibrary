@@ -3,7 +3,7 @@
 #include <iostream>
 
 int main(){
-	unsigned int size = 1000;
+	unsigned int size = 40;
 	Matrix m1(size);
 
 	// Matrix 2
@@ -12,11 +12,13 @@ int main(){
 
 	Matrix m3(size);
 
-	Matrix::multiply(m1, m2, m3);
+	Matrix::mySGEMM(m1, m2, m3);
+
+	Matrix::cublasSGEMM(m1, m2, m3);
+
+	Matrix::report();
 
 	m3.sync();
-
-	std::cout << m3;
 
 	return EXIT_SUCCESS;
 }
