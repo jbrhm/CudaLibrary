@@ -30,7 +30,7 @@ __global__ void rowColProduct(float* dataA, float* dataB, float* dataC, unsigned
 		// Only proceed once shared memory has been populated
 		__syncthreads();
 
-		for(unsigned int i = 0; i < N; ++i){
+		for(unsigned int i = 0; i < TILE_DIM; ++i){
 			dot += sharedA[tileRow][i] * sharedB[i][tileCol];
 		}
 
