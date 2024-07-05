@@ -2,30 +2,32 @@
 
 #include "cuda_matrix.cuh"
 
-Matrix::Matrix(unsigned int N) : mCuMatrix{nullptr}, mN{N}, mMatrix{static_cast<float*>(malloc(mN * mN * sizeof(float)))} {
+Matrix::Matrix(unsigned int M, unsigned int N) : mCuMatrix{nullptr}, mM{M}, mN{N}, mMatrix{static_cast<float*>(malloc(mM * mN * sizeof(float)))} {
 	// Init the Identity Matrix
-	for(int row = 0; row < mN; ++row){
+	for(int row = 0; row < mM; ++row){
 		for(int col = 0; col < mN; ++col){
 			at(row, col) = (row == col) ? 1 : 0;
 		}
 	}
 
-	mCuMatrix = new cudaMatrix(mN, mMatrix);
+	//TODO: Adjust Cuda Matrix
+	mCuMatrix = new cudaMatrix(mM, mN, mMatrix);
 }
 
-Matrix::Matrix(unsigned int N, float* data) : mCuMatrix{nullptr}, mN{N}, mMatrix{static_cast<float*>(malloc(mN * mN * sizeof(float)))} {
+Matrix::Matrix(unsigned int M, unsigned int N, float* data) : mCuMatrix{nullptr}, mM{M}, mN{N}, mMatrix{static_cast<float*>(malloc(mM * mN * sizeof(float)))} {
 	// Init the Identity Matrix
-	for(int row = 0; row < mN; ++row){
+	for(int row = 0; row < mM; ++row){
 		for(int col = 0; col < mN; ++col){
 			at(row, col) = data[row * mN + col];
 		}
 	}
 
-	mCuMatrix = new cudaMatrix(mN, mMatrix);
+	//TODO: Adjust Cuda Matrix
+	mCuMatrix = new cudaMatrix(mM, mN, mMatrix);
 }
 
-unsigned int Matrix::getSize() const{
-	return mN;
+std::pair<unsigned int, unsigned int> Matrix::getSize() const{
+	return {mM, mN};
 }
 
 Matrix::~Matrix(){
@@ -54,7 +56,7 @@ void Matrix::cublasSGEMM(Matrix &matA, Matrix &matB, Matrix &matC){
 
 void Matrix::report(){
 	cudaMatrix::report("my");
-	cudaMatrix::report("cuBLAS");
+	//cudaMatrix::report("cuBLAS");
 }
 
 void Matrix::measureFLOPS(Matrix &matA, Matrix &matB, Matrix &matC, bool isCuBLAS){
@@ -62,9 +64,10 @@ void Matrix::measureFLOPS(Matrix &matA, Matrix &matB, Matrix &matC, bool isCuBLA
 }
 
 std::ostream& operator<<(std::ostream& os, Matrix const& matrix){
-	std::size_t const N = matrix.getSize();
+	std::size_t const N = matrix.getSize().second;
+	std::size_t const M = matrix.getSize().first;
 
-	for(int row = 0; row < N; ++row){
+	for(int row = 0; row < M; ++row){
 		for(int col = 0; col < N; ++col){
 			os << matrix.at(row, col) << ' ';
 		}

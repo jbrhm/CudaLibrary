@@ -2,6 +2,7 @@
 #include <cstdint>
 #include <cstdlib>
 #include <ostream>
+#include <utility>
 
 class cudaMatrix;
 
@@ -11,17 +12,19 @@ private:
 	// Pointer to gpu matrix
 	cudaMatrix* mCuMatrix;
 
+	unsigned int mM;
+
 	unsigned int mN;
 
 	float* mMatrix;
 
 public:
 
-	Matrix(unsigned int N);
+	Matrix(unsigned int M, unsigned int N);
 
-	Matrix(unsigned int N, float* data);
+	Matrix(unsigned int M, unsigned int N, float* data);
 
-	unsigned int getSize() const;
+	std::pair<unsigned int, unsigned int> getSize() const;
 
 	float& at(unsigned int row, unsigned int col);
 

@@ -3,64 +3,72 @@
 LoopProfiler cudaMatrix::mLoopProfiler{};
 
 template<unsigned int TILE_DIM>
-__global__ void rowColProduct(float* dataA, float* dataB, float* dataC, unsigned int N){
+__global__ void rowColProduct(float* dataA, float* dataB, float* dataC, unsigned int M, unsigned int N, unsigned int K){
 
-	// This shared memory exists in each block of threads 
-	__shared__ float sharedA[TILE_DIM][TILE_DIM];
-	__shared__ float sharedB[TILE_DIM][TILE_DIM];
+	// The final location in dataC that is being computed
+	// These coordinates are in tile space not matrix space
+	unsigned int const row = blockIdx.x;
+	unsigned int const col = blockIdx.y;
 
-	// Save ids into registers for FAST access
-	unsigned int blockCol = blockIdx.x;
-	unsigned int blockRow = blockIdx.y;
-	unsigned int tileCol = threadIdx.x;
-	unsigned int tileRow = threadIdx.y;
+	// Allocate shared buffers
+	__shared__ float sharedA[TILE_DIM * TILE_DIM];
+	__shared__ float sharedB[TILE_DIM * TILE_DIM];
 
-	// Deduce row and columns based on the position of the thread
-	unsigned int col = blockCol * TILE_DIM + tileCol;
-	unsigned int row = blockRow * TILE_DIM + tileRow;
+	// Use the global memory coalescing pattern to get the thread id
+	unsigned int const threadCol = threadIdx.x % TILE_DIM;
+	unsigned int const threadRow = threadIdx.x / TILE_DIM;
+
+	// These are the top right corner of all of the matrices
+	dataA += row * TILE_DIM * K;
+	dataB += col * TILE_DIM;
+	dataC += row * TILE_DIM * N + col * TILE_DIM;
 
 	float dot = 0;
-
-	// The value N/static_cast<float>(TILE_DIM) is the number of tiles that will need to be computed
-	for(unsigned int p = 0; p < N/static_cast<float>(TILE_DIM); ++p){
+	
+	// Iterate through all of the blocks requried to process the entire matrix
+	for(unsigned int blockNum = 0; blockNum < K; blockNum += TILE_DIM){
+		
 		// Populate the shared memory
-		sharedA[tileRow][tileCol] = dataA[row * N + p * TILE_DIM + tileCol];
-		sharedB[tileRow][tileCol] = dataB[(p * TILE_DIM + tileRow) * N + col];
+		sharedA[threadRow * TILE_DIM + threadCol] = dataA[threadRow * K + threadCol];
+		sharedB[threadRow * TILE_DIM + threadCol] = dataB[threadRow * N + threadCol];
 
-		// Only proceed once shared memory has been populated
 		__syncthreads();
 
+		// Move to the next chunk
+		dataA += TILE_DIM;
+		dataB += TILE_DIM * N;
+
+		// Dot for current SMEM
 		for(unsigned int i = 0; i < TILE_DIM; ++i){
-			dot += sharedA[tileRow][i] * sharedB[i][tileCol];
+			dot += sharedA[threadRow * TILE_DIM + i] * sharedB[i * TILE_DIM + threadCol];
 		}
 
-		// This prevents newer kernels from overwriting the shared memory that other kernels are done using yet
 		__syncthreads();
 	}
 
-	dataC[row * N + col] = dot;
+	dataC[threadRow * N + threadCol] = dot;
 }
 
-cudaMatrix::cudaMatrix(unsigned int N, float* data) : mN{N}, mData{nullptr} {
-	if(cudaError_t err = cudaMalloc(&mData, mN * mN * sizeof(float)); err != cudaSuccess) std::cout << cudaGetErrorString(err);
-	cudaMemcpy(mData, data, mN * mN * sizeof(float), cudaMemcpyHostToDevice);
+cudaMatrix::cudaMatrix(unsigned int M, unsigned int N, float* data) : mN{N}, mM{M}, mData{nullptr} {
+	if(cudaError_t err = cudaMalloc(&mData, mN * mM * sizeof(float)); err != cudaSuccess) std::cout << cudaGetErrorString(err);
+	cudaMemcpy(mData, data, mN * mM * sizeof(float), cudaMemcpyHostToDevice);
 }
 
 void cudaMatrix::syncHost(float* hostData){
-	cudaMemcpy(hostData, mData, mN * mN * sizeof(float), cudaMemcpyDeviceToHost);
+	cudaMemcpy(hostData, mData, mN * mM * sizeof(float), cudaMemcpyDeviceToHost);
 }
 
 void cudaMatrix::mySGEMM(cudaMatrix &matA, cudaMatrix &matB, cudaMatrix &matC){
 
 	constexpr unsigned int BLOCK_DIM = 32;
-	constexpr dim3 blockDimension{BLOCK_DIM, BLOCK_DIM};
-	dim3 gridDimension{static_cast<unsigned int>(std::ceil(static_cast<float>(matA.mN)/BLOCK_DIM)), static_cast<unsigned int>(std::ceil(static_cast<float>(matA.mN)/BLOCK_DIM))};
+	constexpr dim3 blockDimension{BLOCK_DIM * BLOCK_DIM};
+	dim3 gridDimension{static_cast<unsigned int>(std::ceil(static_cast<float>(matA.mM)/BLOCK_DIM)), static_cast<unsigned int>(std::ceil(static_cast<float>(matC.mN)/BLOCK_DIM))};
 
-	if(matA.mN != matB.mN || matA.mN != matC.mN) throw std::runtime_error("Matrices are not the same size!");
+	if(matA.mN != matB.mM) throw std::runtime_error("Matrices are not compatable!");
 
 	mLoopProfiler.start("my");
 
-	rowColProduct<BLOCK_DIM><<<gridDimension, blockDimension>>>(matA.mData, matB.mData, matC.mData, matA.mN);
+	rowColProduct<BLOCK_DIM><<<gridDimension, blockDimension>>>(matA.mData, matB.mData, matC.mData, matA.mM, matB.mN, matA.mN);
 
 	mLoopProfiler.finish("my");
 }

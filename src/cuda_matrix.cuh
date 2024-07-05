@@ -11,6 +11,8 @@
 
 class cudaMatrix {
 private:
+	unsigned int mM;
+
 	unsigned int mN;
 
 	float* mData;
@@ -18,7 +20,7 @@ private:
 	static LoopProfiler mLoopProfiler;
 
 public:
-	cudaMatrix(unsigned int N, float* data);
+	cudaMatrix(unsigned int M, unsigned int N, float* data);
 
 	void syncHost(float* hostData);
 
