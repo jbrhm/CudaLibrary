@@ -1,11 +1,15 @@
 #pragma once
-#include <cstdint>
-#include <cstdlib>
-#include <ostream>
-#include <utility>
+#include <stdio.h>
 
 class cudaMatrix;
 
+// This cannot be std::pair because c doesnt know about it
+template<typename FIRST_TYPE, typename SECOND_TYPE>
+struct pair {
+	FIRST_TYPE first;
+	SECOND_TYPE second;
+	pair(FIRST_TYPE _first, SECOND_TYPE _second) : first{_first}, second{_second} {}
+};
 
 class Matrix {
 private:

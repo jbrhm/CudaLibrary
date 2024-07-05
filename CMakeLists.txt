@@ -14,6 +14,8 @@ file(GLOB_RECURSE srcs CONFIGURE_DEPENDS ./src/*.c*)
 
 message("We are building using ${srcs}")
 
+# Testing Executable
+
 add_executable(mat ${srcs})
 
 target_include_directories(mat PRIVATE utils/)
@@ -22,4 +24,12 @@ target_link_libraries(mat PRIVATE cublas)
 
 target_compile_options(mat PUBLIC -g3)
 
-set_target_properties(mat PROPERTIES LINKER_LANGUAGE CXX)
+# Shared Library
+
+add_library(cudablas SHARED ${srcs})
+
+target_include_directories(cudablas PRIVATE utils/)
+
+target_link_libraries(cudablas PRIVATE cublas)
+
+target_compile_options(cudablas PUBLIC -g3)
