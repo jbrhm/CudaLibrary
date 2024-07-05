@@ -24,5 +24,7 @@ int main(){
 
 	m3.sync();
 
+	std::cout << m3;
+
 	return EXIT_SUCCESS;
 }
