@@ -62,7 +62,7 @@ void cudaMatrix::mySGEMM(cudaMatrix &matA, cudaMatrix &matB, cudaMatrix &matC){
 
 	constexpr unsigned int BLOCK_DIM = 32;
 	constexpr dim3 blockDimension{BLOCK_DIM * BLOCK_DIM};
-	dim3 gridDimension{static_cast<unsigned int>(std::ceil(static_cast<float>(matA.mM)/BLOCK_DIM)), static_cast<unsigned int>(std::ceil(static_cast<float>(matC.mN)/BLOCK_DIM))};
+	dim3 gridDimension{static_cast<unsigned int>(std::ceil(static_cast<float>(matA.mM)/BLOCK_DIM)), static_cast<unsigned int>(std::ceil(static_cast<float>(matB.mN)/BLOCK_DIM))};
 
 	if(matA.mN != matB.mM) throw std::runtime_error("Matrices are not compatable!");
 
@@ -92,7 +92,7 @@ void cudaMatrix::report(std::string const& name){
 }
 
 void cudaMatrix::measureFLOPS(cudaMatrix &matA, cudaMatrix &matB, cudaMatrix &matC, bool isCuBLAS){
-	size_t flops = 2 * matA.mN * matA.mN * matA.mN;
+	size_t flops = 2 * matA.mM * matA.mN * matB.mN;
 
 	constexpr unsigned int iterations = 1000;
 

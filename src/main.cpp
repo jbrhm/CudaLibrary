@@ -3,9 +3,9 @@
 #include <iostream>
 
 int main(){
-	unsigned int M = 40;
-	unsigned int N = 2;
-	unsigned int K = 3;
+	unsigned int M = 1000;
+	unsigned int N = 1000;
+	unsigned int K = 1000;
 	
 	Matrix m1(M, K);
 
