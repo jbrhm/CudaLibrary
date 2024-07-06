@@ -26,7 +26,7 @@ int main(){
 
 	m3.sync();
 
-	std::cout << m3;
+	m3.print();
 
 	return EXIT_SUCCESS;
 }

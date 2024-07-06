@@ -26,7 +26,7 @@ Matrix::Matrix(unsigned int M, unsigned int N, float* data) : mCuMatrix{nullptr}
 	mCuMatrix = new cudaMatrix(mM, mN, mMatrix);
 }
 
-std::pair<unsigned int, unsigned int> Matrix::getSize() const{
+pair<unsigned int, unsigned int> Matrix::getSize() const{
 	return {mM, mN};
 }
 
@@ -63,16 +63,14 @@ void Matrix::measureFLOPS(Matrix &matA, Matrix &matB, Matrix &matC, bool isCuBLA
 	cudaMatrix::measureFLOPS(*matA.mCuMatrix, *matB.mCuMatrix, *matC.mCuMatrix, isCuBLAS);
 }
 
-std::ostream& operator<<(std::ostream& os, Matrix const& matrix){
-	std::size_t const N = matrix.getSize().second;
-	std::size_t const M = matrix.getSize().first;
+void Matrix::print() {
+	unsigned int const N = getSize().second;
+	unsigned int const M = getSize().first;
 
 	for(int row = 0; row < M; ++row){
 		for(int col = 0; col < N; ++col){
-			os << matrix.at(row, col) << ' ';
+			printf("%.6f ", at(row, col));
 		}
-		os << '\n';
 	}
 
-	return os;
 }

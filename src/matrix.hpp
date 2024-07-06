@@ -28,7 +28,7 @@ public:
 
 	Matrix(unsigned int M, unsigned int N, float* data);
 
-	std::pair<unsigned int, unsigned int> getSize() const;
+	pair<unsigned int, unsigned int> getSize() const;
 
 	float& at(unsigned int row, unsigned int col);
 
@@ -44,7 +44,7 @@ public:
 
 	static void measureFLOPS(Matrix &matA, Matrix &matB, Matrix &matC, bool isCuBLAS);
 
+	void print();
+
 	~Matrix();
 };
-
-std::ostream& operator<<(std::ostream& os, Matrix const& matrix);
