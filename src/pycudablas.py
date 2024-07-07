@@ -1,7 +1,12 @@
-import ctypes
+from ctypes import cdll 
+  
+# load the library 
+print("Loading Library...")
+lib = cdll.LoadLibrary('./build/libcudablas.so') 
 
-ctypes.find_library()
+print("Creating Matrix...")
+matrix = lib.new_matrix(4, 4)
 
-https://docs.python.org/3/library/ctypes.html#variable-sized-data-types
-https://www.geeksforgeeks.org/using-pointers-in-python-using-ctypes/
-https://www.geeksforgeeks.org/how-to-call-c-c-from-python/
+#https://docs.python.org/3/library/ctypes.html#variable-sized-data-types
+#https://www.geeksforgeeks.org/using-pointers-in-python-using-ctypes/
+#https://www.geeksforgeeks.org/how-to-call-c-c-from-python/
