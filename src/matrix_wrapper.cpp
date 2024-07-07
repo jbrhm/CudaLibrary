@@ -2,7 +2,7 @@
 
 extern "C" {
     Matrix* new_matrix(int M, int N){
-		std::cout << "We made it";
+		std::cout << "We made it" << std::endl;
 		return new Matrix(M, N);
 	}
 
