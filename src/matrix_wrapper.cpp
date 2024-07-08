@@ -5,8 +5,8 @@ extern "C" {
 		return reinterpret_cast<unsigned long long>(new Matrix(M, N));
 	}
 
-    Matrix* new_matrix_from_data(int M, int N, float* data){
-		return new Matrix(M, N, data);
+    unsigned long long new_matrix_from_data(int M, int N, float* data){
+		return reinterpret_cast<unsigned long long>(new Matrix(M, N, data));
 	}
 
 	void sync(unsigned long long matrix){
@@ -17,5 +17,20 @@ extern "C" {
 	void print(unsigned long long matrix){
 		Matrix* matrixP = reinterpret_cast<Matrix*>(matrix);
 		matrixP->print();
+	}
+
+	unsigned long long multiply(unsigned long long A, unsigned long long B){
+		
+		Matrix* matrixA = reinterpret_cast<Matrix*>(A);
+		Matrix* matrixB = reinterpret_cast<Matrix*>(B);
+		std::cout << matrixA << ' ' << matrixB << '\n';
+
+		Matrix* matrixC = new Matrix(matrixA->getSize().first, matrixB->getSize().second);
+		std::cout << matrixC << '\n';
+
+		Matrix::mySGEMM(*matrixA, *matrixB, *matrixC);
+		matrixC->print();
+
+		return reinterpret_cast<unsigned long long>(matrixC);
 	}
 }

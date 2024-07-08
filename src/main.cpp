@@ -2,15 +2,15 @@
 #include <iostream>
 
 int main(){
-	unsigned int M = 1000;
-	unsigned int N = 1000;
-	unsigned int K = 1000;
+	unsigned int M = 3;
+	unsigned int N = 3;
+	unsigned int K = 3;
 	
 	Matrix m1(M, K);
 
 	// Matrix 2
 	float* data = new float[9]{2,0,0,0,2,0,0,0,2};
-	Matrix m2(K, N);
+	Matrix m2(K, N, data);
 
 	Matrix m3(M, N);
 

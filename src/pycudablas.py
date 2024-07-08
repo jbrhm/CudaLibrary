@@ -18,6 +18,10 @@ lib.sync.argtypes = (c_longlong,)
 # print
 lib.print.argtypes = (c_longlong,)
 
+# Multiply
+lib.multiply.argtypes = (c_longlong, c_longlong)
+lib.multiply.restype = c_longlong
+
 # load the library 
 class Matrix:
     # This is a pointer to a matrix class in C/C++/CUDA
@@ -29,8 +33,8 @@ class Matrix:
     
     # creates an identity matrix
     @classmethod
-    def identity(cls):
-        matrix = lib.new_matrix(4, 4)
+    def identity(cls, M, N):
+        matrix = lib.new_matrix(M, N)
         return Matrix(matrix)
 
     # data is a np array of floats
@@ -53,15 +57,18 @@ class Matrix:
 
     # Overloaded Matrix Multiplication
     def __mul__(self, other):
-        print("Not implemented yet")
+        return Matrix(lib.multiply(self.matrix, other.matrix))
 
-mat1 = Matrix.identity()
+mat1 = Matrix.identity(2, 2)
 mat1.print()
 
 data = np.array([[2,1],
-                 [1,1]], dtype=np.float32)
+                 [1,1]], 
+                 dtype=np.float32)
 
 mat2 = Matrix.from_data(data)
 mat2.print()
 
-
+mat3 = mat1 * mat2
+mat3.sync()
+mat3.print()
