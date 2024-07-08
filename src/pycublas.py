@@ -21,7 +21,7 @@ lib.sync.argtypes = (c_longlong,)
 lib.print.argtypes = (c_longlong,)
 
 # Multiply
-lib.multiply.argtypes = (c_longlong, c_longlong)
+lib.multiply.argtypes = (c_longlong, c_longlong, c_longlong)
 lib.multiply.restype = c_longlong
 
 # load the library 
@@ -61,8 +61,9 @@ class Matrix:
         lib.sync(self.matrix)
 
     # Overloaded Matrix Multiplication
-    def __mul__(self, other):
-        return Matrix(lib.multiply(self.matrix, other.matrix))
+    @staticmethod
+    def multiply(A, B, C):
+        lib.multiply(A.matrix, B.matrix, C.matrix)
 # SIZE = 100
 # mat1 = Matrix.identity(SIZE, SIZE)
 # mat1.print()

@@ -11,7 +11,7 @@ class Backends(Enum):
     cupybara = 1
     torch = 2
 
-backend = Backends.torch
+backend = Backends.cupybara
 
 begin = time.time()
 if backend == Backends.torch:
@@ -27,10 +27,11 @@ elif backend == Backends.cupybara:
     # Create the matrices
     mat1 = Matrix.identity(SIZE, SIZE)
     mat2 = Matrix.identity(SIZE, SIZE)
+    mat3 = Matrix.identity(SIZE, SIZE)
 
     # Do the multiplications
     for i in range(0, ITERATIONS):
-        mat1 * mat2
+        Matrix.multiply(mat1, mat2, mat3)
 
 
 end = time.time()

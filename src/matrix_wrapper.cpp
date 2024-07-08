@@ -19,16 +19,14 @@ extern "C" {
 		matrixP->print();
 	}
 
-	unsigned long long multiply(unsigned long long A, unsigned long long B){
+	void multiply(unsigned long long A, unsigned long long B, unsigned long long C){
 		
 		Matrix* matrixA = reinterpret_cast<Matrix*>(A);
 		Matrix* matrixB = reinterpret_cast<Matrix*>(B);
-
-		Matrix* matrixC = new Matrix(matrixA->getSize().first, matrixB->getSize().second);
+		Matrix* matrixC = reinterpret_cast<Matrix*>(C);
 
 		Matrix::mySGEMM(*matrixA, *matrixB, *matrixC);
 
-		return reinterpret_cast<unsigned long long>(matrixC);
 	}
 
 	void release(unsigned long long matrix){
