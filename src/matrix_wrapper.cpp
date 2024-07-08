@@ -2,7 +2,6 @@
 
 extern "C" {
     unsigned long long new_matrix(int M, int N){
-		std::cout << "We made it" << std::endl;
 		return reinterpret_cast<unsigned long long>(new Matrix(M, N));
 	}
 
@@ -16,9 +15,7 @@ extern "C" {
 	}
 
 	void print(unsigned long long matrix){
-		std::cout << "Pre print l " << matrix << "\n";
 		Matrix* matrixP = reinterpret_cast<Matrix*>(matrix);
-		std::cout << "Pre print " << matrixP << "\n";
 		matrixP->print();
 	}
 }

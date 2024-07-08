@@ -1,28 +1,33 @@
-from ctypes import CDLL, c_void_p, c_longlong
+from ctypes import CDLL, c_longlong
   
-# load the library 
-print("Loading Library...")
 lib = CDLL('./build/libcudablas.so') 
 
+# new_matrix
 lib.new_matrix.restype = c_longlong
+
+# sync
 lib.sync.argtypes = (c_longlong,)
+
+# print
 lib.print.argtypes = (c_longlong,)
 
-print("Creating Matrix...")
-matrix = lib.new_matrix(4, 4)
+# load the library 
+class Matrix:
+    # This is a pointer to a matrix class in C/C++/CUDA
+    matrix: c_longlong
 
-print("Python Matrix Value:")
-print(matrix)
+    def __init__(self):
+        self.matrix = lib.new_matrix(4, 4)
 
-print("Syncing Matrix...")
-lib.sync(matrix)
+    def print(self):
+        lib.print(self.matrix)
 
-print("Python Matrix Value:")
-print(matrix)
+    def sync(self):
+        lib.sync(self.matrix)
 
-print("Printing Matrix...")
-lib.print(matrix)
+    # Overloaded Matrix Multiplication
+    def __mul__(self, other):
+        print("Not implemented yet")
 
-#https://docs.python.org/3/library/ctypes.html#variable-sized-data-types
-#https://www.geeksforgeeks.org/using-pointers-in-python-using-ctypes/
-#https://www.geeksforgeeks.org/how-to-call-c-c-from-python/
+mat = Matrix()
+mat.print()
