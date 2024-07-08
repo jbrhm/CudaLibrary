@@ -3,7 +3,7 @@ import time
 from enum import Enum
 from pycublas import Matrix
 
-SIZE = 40
+SIZE = 1000
 
 ITERATIONS = 1000
 
@@ -11,7 +11,7 @@ class Backends(Enum):
     cupybara = 1
     torch = 2
 
-backend = Backends.cupybara
+backend = Backends.torch
 
 begin = time.time()
 if backend == Backends.torch:
