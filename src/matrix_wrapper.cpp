@@ -23,14 +23,15 @@ extern "C" {
 		
 		Matrix* matrixA = reinterpret_cast<Matrix*>(A);
 		Matrix* matrixB = reinterpret_cast<Matrix*>(B);
-		std::cout << matrixA << ' ' << matrixB << '\n';
 
 		Matrix* matrixC = new Matrix(matrixA->getSize().first, matrixB->getSize().second);
-		std::cout << matrixC << '\n';
 
 		Matrix::mySGEMM(*matrixA, *matrixB, *matrixC);
-		matrixC->print();
 
 		return reinterpret_cast<unsigned long long>(matrixC);
+	}
+
+	void release(unsigned long long matrix){
+		delete reinterpret_cast<Matrix*>(matrix);
 	}
 }

@@ -11,6 +11,8 @@ lib.new_matrix.restype = c_longlong
 # new_matrix_data
 lib.new_matrix_from_data.argtypes = (c_uint, c_uint, POINTER(c_float))
 lib.new_matrix_from_data.restype = c_longlong
+# release Matrix data
+lib.release.argtypes = (c_longlong,)
 
 # sync
 lib.sync.argtypes = (c_longlong,)
@@ -30,6 +32,9 @@ class Matrix:
     def __init__(self, _matrix):
         self.matrix = _matrix
         pass
+
+    def __del__(self):
+        lib.release(self.matrix)
     
     # creates an identity matrix
     @classmethod
@@ -58,17 +63,17 @@ class Matrix:
     # Overloaded Matrix Multiplication
     def __mul__(self, other):
         return Matrix(lib.multiply(self.matrix, other.matrix))
+# SIZE = 100
+# mat1 = Matrix.identity(SIZE, SIZE)
+# mat1.print()
 
-mat1 = Matrix.identity(2, 2)
-mat1.print()
+# data = np.array([[2,1],
+#                  [1,1]], 
+#                  dtype=np.float32)
 
-data = np.array([[2,1],
-                 [1,1]], 
-                 dtype=np.float32)
+# mat2 = Matrix.from_data(data)
+# mat2.print()
 
-mat2 = Matrix.from_data(data)
-mat2.print()
-
-mat3 = mat1 * mat2
-mat3.sync()
-mat3.print()
+# mat3 = mat1 * mat2
+# mat3.sync()
+# mat3.print()
