@@ -32,4 +32,4 @@ target_include_directories(cudablas PRIVATE utils/)
 
 target_link_libraries(cudablas PRIVATE cublas)
 
-target_compile_options(cudablas PUBLIC -g3)
+target_compile_options(cudablas PUBLIC -O3)
