@@ -10,7 +10,6 @@ Matrix::Matrix(unsigned int M, unsigned int N) : mCuMatrix{nullptr}, mM{M}, mN{N
 		}
 	}
 
-	//TODO: Adjust Cuda Matrix
 	mCuMatrix = new cudaMatrix(mM, mN, mMatrix);
 }
 
@@ -22,12 +21,11 @@ Matrix::Matrix(unsigned int M, unsigned int N, float* data) : mCuMatrix{nullptr}
 		}
 	}
 
-	//TODO: Adjust Cuda Matrix
 	mCuMatrix = new cudaMatrix(mM, mN, mMatrix);
 }
 
 pair<unsigned int, unsigned int> Matrix::getSize() const{
-	return {mM, mN};
+	return pair<unsigned int, unsigned int>(mM, mN);
 }
 
 Matrix::~Matrix(){
@@ -64,13 +62,15 @@ void Matrix::measureFLOPS(Matrix &matA, Matrix &matB, Matrix &matC, bool isCuBLA
 }
 
 void Matrix::print() {
-	unsigned int const N = getSize().second;
-	unsigned int const M = getSize().first;
+	auto const& size = getSize();
+	unsigned int const N = size.second;
+	unsigned int const M = size.first;
 
 	for(int row = 0; row < M; ++row){
 		for(int col = 0; col < N; ++col){
-			printf("%.6f ", at(row, col));
+			std::cout << at(row, col) << ' ';
 		}
+		std::cout << '\n';
 	}
 
 }
