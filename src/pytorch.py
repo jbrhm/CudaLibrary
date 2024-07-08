@@ -5,7 +5,7 @@ from pycublas import Matrix
 
 SIZE = 40
 
-ITERATIONS = 1000
+ITERATIONS = 100
 
 class Backends(Enum):
     cupybara = 1
