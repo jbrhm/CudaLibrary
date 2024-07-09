@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.27)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 set(CMAKE_CUDA_COMPILER "/usr/local/cuda-12.3/bin/nvcc")
 set(CMAKE_CXX_COMPILER "/usr/bin/clang++-18")
 set(CMAKE_C_COMPILER "/usr/bin/clang-18")

@@ -64,17 +64,3 @@ class Matrix:
     @staticmethod
     def multiply(A, B, C):
         lib.multiply(A.matrix, B.matrix, C.matrix)
-# SIZE = 100
-# mat1 = Matrix.identity(SIZE, SIZE)
-# mat1.print()
-
-# data = np.array([[2,1],
-#                  [1,1]], 
-#                  dtype=np.float32)
-
-# mat2 = Matrix.from_data(data)
-# mat2.print()
-
-# mat3 = mat1 * mat2
-# mat3.sync()
-# mat3.print()

@@ -3,7 +3,7 @@ import time
 from enum import Enum
 from pycublas import Matrix
 
-SIZE = 1000
+SIZE = 500
 
 ITERATIONS = 1000
 
@@ -14,6 +14,7 @@ class Backends(Enum):
 backend = Backends.torch
 
 begin = time.time()
+
 if backend == Backends.torch:
     # Create the tensors
     tensor1 = torch.rand(SIZE, SIZE)
@@ -32,7 +33,6 @@ elif backend == Backends.cupybara:
     # Do the multiplications
     for i in range(0, ITERATIONS):
         Matrix.multiply(mat1, mat2, mat3)
-
 
 end = time.time()
 
