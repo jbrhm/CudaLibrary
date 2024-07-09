@@ -1,2 +1,4 @@
+import os
 class CupybaraPaths:
-    cupybara_libs = './lib/libcupybara.so'
+    path = os.path.dirname(__file__)
+    cupybara_libs = f'{path}/lib/libcupybara.so'
