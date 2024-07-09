@@ -1,0 +1,25 @@
+[project]
+name = "cupybara_jbrhm"
+version = "1.0.0"
+authors = [
+  { name="jbrhm", email="no@no.no" },
+]
+description = "This is a python package for the cupybara matrix multiplication library"
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://github.com/jbrhm/CudaLibrary"
+Issues = "https://github.com/jbrhm/CudaLibrary/issues"
+
+[build-system]
+requires = [
+    "hatchling",
+    "numpy"
+]
+build-backend = "hatchling.build"

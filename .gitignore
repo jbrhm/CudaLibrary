@@ -3,3 +3,4 @@
 build/
 *__pycache__*
 package/cupybara_jbrhm/lib
+package/dist/
