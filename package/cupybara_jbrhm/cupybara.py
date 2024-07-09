@@ -2,7 +2,7 @@ from ctypes import CDLL, c_longlong, c_uint, POINTER, c_float
 
 import numpy as np
 
-from cupybara_paths import CupybaraPaths
+from cupybara_jbrhm.cupybara_paths import CupybaraPaths
   
 lib = CDLL(CupybaraPaths.cupybara_libs) 
 
