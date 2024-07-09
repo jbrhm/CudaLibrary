@@ -2,8 +2,11 @@
 set(CUPYBARA_PACKAGE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/package/cupybara_jbrhm)
 set(CUPYBARA_INSTALLATION_DIR ${CUPYBARA_PACKAGE_DIR}/lib)
 set(CUPYBARA_LIB_DIR ${CMAKE_BINARY_DIR}/libcupybara.so)
-set(CUPYBARA_INSTALLATION_DIR_STR "\'${CUPYBARA_INSTALLATION_DIR}/libcupybara.so\'")
-
+file(
+        RELATIVE_PATH CUPYBARA_INSTALLATION_DIR_STR
+        ${CUPYBARA_PACKAGE_DIR}
+        "${CUPYBARA_INSTALLATION_DIR}/libcupybara.so"  
+    )
 
 # Configure the path so cupybara knows where to find the libraries
 configure_file(cmake/cupybara_paths.py.in cupybara_paths.py @ONLY)
