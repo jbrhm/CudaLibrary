@@ -1,8 +1,10 @@
 from ctypes import CDLL, c_longlong, c_uint, POINTER, c_float
 
 import numpy as np
+
+from cupybara_paths import CupybaraPaths
   
-lib = CDLL('./build/libcudablas.so') 
+lib = CDLL(CupybaraPaths.cupybara_libs) 
 
 # new_matrix
 lib.new_matrix.argtypes = (c_uint, c_uint)

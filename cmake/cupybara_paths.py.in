@@ -1,0 +1,2 @@
+class CupybaraPaths:
+    cupybara_libs = @CUPYBARA_INSTALLATION_DIR_STR@

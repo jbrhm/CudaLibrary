@@ -1,7 +1,12 @@
+# Tell Python interpreter where cupybara is for testing
+import sys
+sys.path.insert(0, '/home/john/Desktop/PersonalProjects/CudaLibrary/src')
+from cupybara import Matrix
+
+# Regular imports
 import torch
 import time
 from enum import Enum
-from pycublas import Matrix
 
 SIZE = 500
 
@@ -11,7 +16,7 @@ class Backends(Enum):
     cupybara = 1
     torch = 2
 
-backend = Backends.torch
+backend = Backends.cupybara
 
 begin = time.time()
 
