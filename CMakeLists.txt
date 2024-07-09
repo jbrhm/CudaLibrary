@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.27)
+cmake_minimum_required(VERSION 3.28)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
@@ -7,7 +7,7 @@ set(CMAKE_CXX_COMPILER "/usr/bin/clang++-18")
 set(CMAKE_C_COMPILER "/usr/bin/clang-18")
 set(CMAKE_CUDA_FLAGS -allow-unsupported-compiler)
 
-project(matrix 
+project(cupybara 
 	VERSION 1.0.0
 	LANGUAGES CXX C CUDA
 )
@@ -18,20 +18,22 @@ message("We are building using ${srcs}")
 
 # Testing Executable
 
-add_executable(mat ${srcs})
+add_executable(cupybaraTest ${srcs})
 
-target_include_directories(mat PRIVATE utils/)
+target_include_directories(cupybaraTest PRIVATE utils/)
 
-target_link_libraries(mat PRIVATE cublas)
+target_link_libraries(cupybaraTest PRIVATE cublas)
 
-target_compile_options(mat PUBLIC -g3)
+target_compile_options(cupybaraTest PUBLIC -g3)
 
 # Shared Library
 
-add_library(cudablas SHARED ${srcs})
+add_library(cupybara SHARED ${srcs})
 
-target_include_directories(cudablas PRIVATE utils/)
+target_include_directories(cupybara PRIVATE utils/)
 
-target_link_libraries(cudablas PRIVATE cublas)
+target_link_libraries(cupybara PRIVATE cublas)
 
-target_compile_options(cudablas PUBLIC -O3)
+target_compile_options(cupybara PUBLIC -O3)
+
+include(cmake/installation.cmake)
