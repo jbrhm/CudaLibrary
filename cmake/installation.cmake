@@ -11,9 +11,12 @@ file(
 # Configure the path so cupybara knows where to find the libraries
 configure_file(cmake/cupybara_paths.py.in cupybara_paths.py @ONLY)
 
+# Install python source
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/src/cupybara.py DESTINATION ${CUPYBARA_PACKAGE_DIR})
+
 # Install cupybara shared library
 install(FILES ${CUPYBARA_LIB_DIR} DESTINATION ${CUPYBARA_INSTALLATION_DIR})
-install(FILES ${CMAKE_BINARY_DIR}/cupybara_paths.py DESTINATION ${CUPYBARA_PACKAGE_DIR})
+
 
 # Install Shared Library Dependencies
 install(CODE [[
