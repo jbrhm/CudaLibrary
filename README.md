@@ -17,5 +17,5 @@ Cupybara Python Front End:
 Pytorch Python Front End:
 0.40395909001952424 GFLOPS
 
-Cupybara Python Back End:
+Cupybara CUDA Back End:
 421354 GFLOPS
