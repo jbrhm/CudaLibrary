@@ -1,6 +1,6 @@
 # Pycubara
 <p align="center">
-  <img src="https://github.com/jbrhm/CudaLibrary/blob/main/data/Cupybara.png" />
+  <img src="https://github.com/jbrhm/CudaLibrary/blob/main/data/Cupybara.png"/>
 </p>
 
 ## Installation
@@ -10,6 +10,7 @@
 
 ## Performance
 **Performance Measured On 1000x1000 Matrices**
+
 Cupybara Python Front End:
 2.201327628700629 GFLOPS
 
