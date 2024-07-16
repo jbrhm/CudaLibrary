@@ -1,7 +1,11 @@
 #include "matrix.hpp"
+#include "test_suite.hpp"
 #include <iostream>
 
 int main(){
+	// Run the test suite
+	run();
+	
 	unsigned int M = 3;
 	unsigned int N = 1000;
 	unsigned int K = 3;
