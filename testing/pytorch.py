@@ -16,7 +16,7 @@ class Backends(Enum):
     cupybara = 1
     torch = 2
 
-backend = Backends.cupybara
+backend = Backends.torch
 
 begin = time.time()
 
@@ -24,6 +24,9 @@ if backend == Backends.torch:
     # Create the tensors
     tensor1 = torch.rand(SIZE, SIZE)
     tensor2 = torch.rand(SIZE, SIZE)
+
+    tensor1.to('cuda')
+    tensor2.to('cuda')
 
     # Do the multiplications
     for i in range(0, ITERATIONS):
