@@ -13,14 +13,26 @@ struct pair {
 
 class Matrix {
 private:
+	enum State {
+		HOST = 0,
+		DEVICE= 1
+	};
+
+	State mState;
+
 	// Pointer to gpu matrix
 	cudaMatrix* mCuMatrix;
+
+	// TODO: Tune this threshold
+	constexpr static unsigned int HOST_TO_CUDA_THRESHOLD = 250;
 
 	unsigned int mM;
 
 	unsigned int mN;
 
 	float* mMatrix;
+	
+	static void hostSGEMM(Matrix &matA, Matrix &matB, Matrix &matC);
 
 public:
 
@@ -34,7 +46,9 @@ public:
 
 	float const& at(unsigned int row, unsigned int col) const;
 
-	void sync();
+	void syncHost();
+
+	void syncDevice();
 
 	static void mySGEMM(Matrix &matA, Matrix &matB, Matrix &matC);
 

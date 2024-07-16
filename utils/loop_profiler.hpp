@@ -7,6 +7,7 @@
 #include <vector>
 #include <stdexcept>
 
+// Performance Measurement utility
 class LoopProfiler {
 private:
     class TimingInfo {

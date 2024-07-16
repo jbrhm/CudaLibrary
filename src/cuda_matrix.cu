@@ -58,6 +58,10 @@ void cudaMatrix::syncHost(float* hostData){
 	cudaMemcpy(hostData, mData, mN * mM * sizeof(float), cudaMemcpyDeviceToHost);
 }
 
+void cudaMatrix::syncDevice(float* hostData){
+	cudaMemcpy(mData, hostData, mN * mM * sizeof(float), cudaMemcpyHostToDevice);
+}
+
 void cudaMatrix::mySGEMM(cudaMatrix &matA, cudaMatrix &matB, cudaMatrix &matC){
 
 	constexpr unsigned int BLOCK_DIM = 32;

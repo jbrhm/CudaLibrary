@@ -2,15 +2,18 @@
 #include <iostream>
 
 int main(){
-	unsigned int M = 1000;
+	unsigned int M = 3;
 	unsigned int N = 1000;
-	unsigned int K = 1000;
+	unsigned int K = 3;
 	
 	Matrix m1(M, K);
 
 	// Matrix 2
 	float* data = new float[9]{2,0,0,0,2,0,0,0,2};
 	Matrix m2(K, N);
+	m2.at(0,0) = 3;
+	m2.at(1,1) = 3;
+	m2.at(2,2) = 3;
 
 	Matrix m3(M, N);
 
@@ -23,8 +26,6 @@ int main(){
 	Matrix::measureFLOPS(m1, m2, m3, false);
 
 	// Matrix::measureFLOPS(m1, m2, m3, true);
-
-	m3.sync();
 
 	m3.print();
 
