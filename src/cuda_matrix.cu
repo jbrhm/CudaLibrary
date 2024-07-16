@@ -59,7 +59,7 @@ void cudaMatrix::syncHost(float* hostData){
 }
 
 void cudaMatrix::syncDevice(float* hostData){
-	cudaMemcpy(hostData, mData, mN * mM * sizeof(float), cudaMemcpyDeviceToHost);
+	cudaMemcpy(mData, hostData, mN * mM * sizeof(float), cudaMemcpyHostToDevice);
 }
 
 void cudaMatrix::mySGEMM(cudaMatrix &matA, cudaMatrix &matB, cudaMatrix &matC){

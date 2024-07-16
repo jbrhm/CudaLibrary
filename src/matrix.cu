@@ -112,6 +112,7 @@ void Matrix::measureFLOPS(Matrix &matA, Matrix &matB, Matrix &matC, bool isCuBLA
 }
 
 void Matrix::print() {
+	syncHost();
 	auto const& size = getSize();
 	unsigned int const N = size.second;
 	unsigned int const M = size.first;

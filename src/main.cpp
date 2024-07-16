@@ -3,7 +3,7 @@
 
 int main(){
 	unsigned int M = 3;
-	unsigned int N = 3;
+	unsigned int N = 1000;
 	unsigned int K = 3;
 	
 	Matrix m1(M, K);
@@ -26,8 +26,6 @@ int main(){
 	Matrix::measureFLOPS(m1, m2, m3, false);
 
 	// Matrix::measureFLOPS(m1, m2, m3, true);
-
-	m3.syncHost();
 
 	m3.print();
 
