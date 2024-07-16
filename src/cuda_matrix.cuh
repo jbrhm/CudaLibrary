@@ -23,6 +23,8 @@ public:
 	cudaMatrix(unsigned int M, unsigned int N, float* data);
 
 	void syncHost(float* hostData);
+	
+	void syncDevice(float* hostData);
 
 	static void mySGEMM(cudaMatrix &matA, cudaMatrix &matB, cudaMatrix &matC);
 

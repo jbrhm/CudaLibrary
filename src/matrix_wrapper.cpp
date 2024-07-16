@@ -11,7 +11,7 @@ extern "C" {
 
 	void sync(unsigned long long matrix){
 		Matrix* matrixP = reinterpret_cast<Matrix*>(matrix);
-		matrixP->sync();
+		matrixP->syncHost();
 	}
 
 	void print(unsigned long long matrix){
