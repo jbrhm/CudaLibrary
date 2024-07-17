@@ -16,7 +16,7 @@ class Backends(Enum):
     cupybara = 1
     torch = 2
 
-backend = Backends.torch
+backend = Backends.cupybara
 
 begin = time.time()
 
@@ -46,4 +46,4 @@ end = time.time()
 
 GFLOPS = ((2 * SIZE * SIZE * SIZE) / (end - begin)) * 1e-9; 
 
-print(f"Pytorch had {GFLOPS} GFLOPS")
+print(f"{GFLOPS} GFLOPS")
