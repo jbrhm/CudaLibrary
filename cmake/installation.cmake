@@ -1,5 +1,5 @@
 # Destiantion for all of the deps
-set(CUPYBARA_PACKAGE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/package/cupybara_jbrhm)
+set(CUPYBARA_PACKAGE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/package/cupybara)
 set(CUPYBARA_INSTALLATION_DIR ${CUPYBARA_PACKAGE_DIR}/lib)
 set(CUPYBARA_LIB_DIR ${CMAKE_BINARY_DIR}/libcupybara.so)
 file(
@@ -20,8 +20,8 @@ install(FILES ${CUPYBARA_LIB_DIR} DESTINATION ${CUPYBARA_INSTALLATION_DIR})
 
 # Install Shared Library Dependencies
 install(CODE [[
-        set(CUPYBARA_LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/package/cupybara_jbrhm/lib/libcupybara.so)
-        set(CUPYBARA_INSTALLATION_DIR ${CMAKE_CURRENT_SOURCE_DIR}/package/cupybara_jbrhm/lib)
+        set(CUPYBARA_LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/package/cupybara/lib/libcupybara.so)
+        set(CUPYBARA_INSTALLATION_DIR ${CMAKE_CURRENT_SOURCE_DIR}/package/cupybara/lib)
 
         message("Installing: ${CUPYBARA_LIB_DIR}")
 
