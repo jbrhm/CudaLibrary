@@ -8,7 +8,7 @@ set(CMAKE_C_COMPILER "/usr/bin/clang-18")
 set(CMAKE_CUDA_FLAGS -allow-unsupported-compiler)
 
 project(cupybara 
-	VERSION 1.0.1
+	VERSION 1.0.2
 	LANGUAGES CXX C CUDA
 )
 
