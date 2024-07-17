@@ -10,6 +10,7 @@ file(
 
 # Configure the path so cupybara knows where to find the libraries
 configure_file(cmake/cupybara_paths.py.in cupybara_paths.py @ONLY)
+install(FILES ${CMAKE_BINARY_DIR}/cupybara_paths.py DESTINATION ${CUPYBARA_PACKAGE_DIR})
 
 # Install python source
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/src/cupybara.py DESTINATION ${CUPYBARA_PACKAGE_DIR})
