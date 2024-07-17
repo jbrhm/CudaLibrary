@@ -1,7 +1,7 @@
 # Tell Python interpreter where cupybara is for testing
 import sys
 #sys.path.insert(0, '/home/john/Desktop/PersonalProjects/CudaLibrary/package/cupybara_jbrhm')
-from cupybara_jbrhm.cupybara import Matrix
+from cupybara.cupybara import Matrix
 
 # Regular imports
 import torch
@@ -16,7 +16,7 @@ class Backends(Enum):
     cupybara = 1
     torch = 2
 
-backend = Backends.torch
+backend = Backends.cupybara
 
 begin = time.time()
 
@@ -46,4 +46,4 @@ end = time.time()
 
 GFLOPS = ((2 * SIZE * SIZE * SIZE) / (end - begin)) * 1e-9; 
 
-print(f"Pytorch had {GFLOPS} GFLOPS")
+print(f"{GFLOPS} GFLOPS")
