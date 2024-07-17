@@ -1,7 +1,7 @@
 # Tell Python interpreter where cupybara is for testing
 import sys
 #sys.path.insert(0, '/home/john/Desktop/PersonalProjects/CudaLibrary/package/cupybara_jbrhm')
-from cupybara_jbrhm.cupybara import Matrix
+from cupybara.cupybara import Matrix
 
 # Regular imports
 import torch
