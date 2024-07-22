@@ -5,8 +5,13 @@
 
 ## Installation
 - Download the latest release of Cupybara using the release tab on the right
-- Cd to the directory the wheel was downloaded
+- Cd to the directory the wheel and package were downloaded
 - Run `sudo pip install --force-reinstall cupybara-1.0.2-py3-none-any.whl`
+- Run `sudo apt install -f ./cupybara_1.0.2.deb`
+
+## Uninstall
+- Run `pip uninstall cupybara`
+- Run `sudo apt remove cupybara`
 
 ## Performance
 **Performance Measured On 1000x1000 Matrices**
