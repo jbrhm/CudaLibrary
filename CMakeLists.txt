@@ -37,3 +37,5 @@ target_link_libraries(cupybara PRIVATE cublas)
 target_compile_options(cupybara PUBLIC -O3)
 
 include(cmake/installation.cmake)
+
+include(cmake/packing.cmake)

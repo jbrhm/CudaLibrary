@@ -10,36 +10,37 @@ file(
 
 # Configure the path so cupybara knows where to find the libraries
 configure_file(cmake/cupybara_paths.py.in cupybara_paths.py @ONLY)
-install(FILES ${CMAKE_BINARY_DIR}/cupybara_paths.py DESTINATION ${CUPYBARA_PACKAGE_DIR})
+install(FILES ${CMAKE_BINARY_DIR}/cupybara_paths.py DESTINATION ${CUPYBARA_PACKAGE_DIR} COMPONENT CUPYBARA_LIB)
 
 # Install python source
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/src/cupybara.py DESTINATION ${CUPYBARA_PACKAGE_DIR})
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/src/cupybara.py DESTINATION ${CUPYBARA_PACKAGE_DIR} COMPONENT CUPYBARA_TEST)
 
 # Install cupybara shared library
 install(FILES ${CUPYBARA_LIB_DIR} DESTINATION ${CUPYBARA_INSTALLATION_DIR})
 
-
 # Install Shared Library Dependencies
+set(CPACK_CUPYBARA_LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/package/cupybara/lib/libcupybara.so)
+set(CPACK_CUPYBARA_DEPS_INSTALLATION_DIR /lib/cupybara)
 install(CODE [[
         set(CUPYBARA_LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/package/cupybara/lib/libcupybara.so)
-        set(CUPYBARA_INSTALLATION_DIR ${CMAKE_CURRENT_SOURCE_DIR}/package/cupybara/lib)
-
-        message("Installing: ${CUPYBARA_LIB_DIR}")
+        set(CUPYBARA_DEPS_INSTALLATION_DIR /lib/cupybara)
 
         file(GET_RUNTIME_DEPENDENCIES
-            LIBRARIES ${CUPYBARA_LIB_DIR}
+            LIBRARIES ${CPACK_CUPYBARA_LIB_DIR}
             RESOLVED_DEPENDENCIES_VAR _r_deps
         )
 
         message("Installing: " ${_r_deps})
 
         foreach(_file ${_r_deps})
+            message(${_file})
             file(INSTALL
-                DESTINATION "${CUPYBARA_INSTALLATION_DIR}"
+                DESTINATION "${CPACK_CUPYBARA_DEPS_INSTALLATION_DIR}"
                 TYPE SHARED_LIBRARY
                 FOLLOW_SYMLINK_CHAIN
                 FILES "${_file}"
             )
         endforeach()
-      ]])
-
+      ]]
+      COMPONENT CUPYBARA_DEPS
+      )
