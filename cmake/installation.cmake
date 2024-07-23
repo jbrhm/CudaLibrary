@@ -19,18 +19,16 @@ install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/src/cupybara.py DESTINATION ${CUPYBARA
 install(FILES ${CUPYBARA_LIB_DIR} DESTINATION ${CUPYBARA_INSTALLATION_DIR})
 
 # Install Shared Library Dependencies
-set(CPACK_CUPYBARA_LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/package/cupybara/lib/libcupybara.so)
-set(CPACK_CUPYBARA_DEPS_INSTALLATION_DIR /lib/cupybara)
+
 install(CODE [[
-        set(CUPYBARA_LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/package/cupybara/lib/libcupybara.so)
-        set(CUPYBARA_DEPS_INSTALLATION_DIR /lib/cupybara)
+        set(CPACK_CUPYBARA_LIB_DIR ./libcupybara.so CACHE STRING "dir")
+        set(CPACK_CUPYBARA_DEPS_INSTALLATION_DIR /lib/cupybara CACHE STRING "dir")
+        message("Installing: " ${CPACK_CUPYBARA_LIB_DIR})
 
         file(GET_RUNTIME_DEPENDENCIES
             LIBRARIES ${CPACK_CUPYBARA_LIB_DIR}
             RESOLVED_DEPENDENCIES_VAR _r_deps
         )
-
-        message("Installing: " ${_r_deps})
 
         foreach(_file ${_r_deps})
             message(${_file})

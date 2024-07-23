@@ -1,8 +1,8 @@
 sudo -v
 cmake . -B build -DCPACK_COMPONENTS_ALL="CUPYBARA_DEPS"
 cmake --build build
-sudo cmake --install build
 cd build
+sudo cmake --install .
 sudo cpack -G DEB 
 cd ..
 cp build/_packages/cupybara_1.0.2.deb releases
