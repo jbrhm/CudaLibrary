@@ -4,10 +4,9 @@
 </p>
 
 ## Installation
-- Download the latest release of Cupybara using the release tab on the right
-- Cd to the directory the wheel and package were downloaded
-- Run `sudo pip install --force-reinstall cupybara-1.0.2-py3-none-any.whl`
-- Run `sudo apt install -f ./cupybara_1.0.2.deb`
+- Clone and `cd` into the repo
+- `chmod +x ./build.sh`
+- `./build.sh`
 
 ## Uninstall
 - Run `pip uninstall cupybara`
