@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <iostream>
+#include <algorithm>
 
 class cudaVector;
 
@@ -11,6 +12,8 @@ private:
 	std::vector<float> mData;
 public:
 	Vector(unsigned int n);
+
+	Vector(unsigned int n, float* data);
 
 	void syncHost();
 

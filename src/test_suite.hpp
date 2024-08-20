@@ -185,6 +185,16 @@ void testVectorDefaultCtor(){
 	ASSERT_TRUE(correct.str() == result.str());
 }
 
+void testVectorDataCtor(){
+	std::vector<float> data{1, 3, 4, 4, 4, 5};
+	Vector v{static_cast<unsigned int>(data.size()), data.data()};
+	std::istringstream correct("[ 1 3 4 4 4 5 ]");
+	std::ostringstream result;
+	v.print(result);
+
+	ASSERT_TRUE(correct.str() == result.str());
+}
+
 void run(){
     testMatrixDefaultCtor();
     testMatrixDefaultCtorNonSquare();
@@ -194,4 +204,5 @@ void run(){
     testMatrixDeviceSGEMMSquare();
     testMatrixDeviceSGEMMRec();
 	testVectorDefaultCtor();
+	testVectorDataCtor();
 }

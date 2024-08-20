@@ -1,8 +1,12 @@
 #include "vector.hpp"
 #include "cuda_vector.cuh"
 
-Vector::Vector(unsigned int n) : mCuVector{nullptr}, mData(n){
-	; // Defaults to zero
+Vector::Vector(unsigned int n) : mCuVector{nullptr}, mData(n) /* Defaults to zero*/ {
+	mCuVector = new cudaVector(n, mData.data());
+}
+
+Vector::Vector(unsigned int n, float* data): mCuVector{nullptr}, mData(n) {
+	memcpy(mData.data(), data, sizeof(float) * n);
 	mCuVector = new cudaVector(n, mData.data());
 }
 
