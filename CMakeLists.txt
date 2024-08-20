@@ -20,6 +20,8 @@ message("We are building using ${srcs}")
 
 add_executable(cupybaraTest ${srcs})
 
+set_property(TARGET cupybaraTest PROPERTY CXX_STANDARD 20)
+
 target_include_directories(cupybaraTest PRIVATE utils/)
 
 target_link_libraries(cupybaraTest PRIVATE cublas)
@@ -29,6 +31,8 @@ target_compile_options(cupybaraTest PUBLIC -g3)
 # Shared Library
 
 add_library(cupybara SHARED ${srcs})
+
+set_property(TARGET cupybara PROPERTY CXX_STANDARD 20)
 
 target_include_directories(cupybara PRIVATE utils/)
 

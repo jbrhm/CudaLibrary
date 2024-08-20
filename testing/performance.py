@@ -8,7 +8,7 @@ import torch
 import time
 from enum import Enum
 
-SIZE = 3
+SIZE = 1000
 
 ITERATIONS = 1000
 
@@ -16,7 +16,7 @@ class Backends(Enum):
     cupybara = 1
     torch = 2
 
-backend = Backends.cupybara
+backend = Backends.torch
 
 begin = time.time()
 
