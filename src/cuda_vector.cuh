@@ -6,11 +6,14 @@
 #include <format>
 #include <string>
 
+constexpr static unsigned int READ_SIZE = 100;
+
 class cudaVector{
 private:
 	float* mData;
 	unsigned int mSize;
 		
 public:
-	cudaVector(unsigned int n);
+	cudaVector(unsigned int n, float* data);
+	~cudaVector();
 };
