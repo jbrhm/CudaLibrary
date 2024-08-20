@@ -1,7 +1,9 @@
 #pragma once
 #include "matrix.hpp"
+#include "vector.hpp"
 #include <iostream>
 #include <exception>
+#include <sstream>
 
 template<typename T1, typename T2>
 void ASSERT_EQUAL(T1 a, T2 b){
@@ -10,7 +12,13 @@ void ASSERT_EQUAL(T1 a, T2 b){
     }
 }
 
-void testDefaultCtor(){
+void ASSERT_TRUE(bool clause){
+    if(!clause){
+        throw std::runtime_error("Assertion Failed");
+    }
+}
+
+void testMatrixDefaultCtor(){
     unsigned int m = 3;
     unsigned int n = 3;
     Matrix m1(m,n);
@@ -26,7 +34,7 @@ void testDefaultCtor(){
     }
 }
 
-void testDefaultCtorNonSquare(){
+void testMatrixDefaultCtorNonSquare(){
     unsigned int m = 3;
     unsigned int n = 10;
     Matrix m1(m,n);
@@ -42,7 +50,7 @@ void testDefaultCtorNonSquare(){
     }
 }
 
-void testAt(){
+void testMatrixAt(){
     // Regular at
     unsigned int m = 3;
     unsigned int n = 10;
@@ -58,7 +66,7 @@ void testAt(){
     ASSERT_EQUAL(m2.at(0, 2), 3);
 }
 
-void testHostSGEMMSquare(){
+void testMatrixHostSGEMMSquare(){
     unsigned int m = 3;
     unsigned int n = 3;
     unsigned int k = 3;
@@ -82,7 +90,7 @@ void testHostSGEMMSquare(){
     }
 }
 
-void testHostSGEMMRec(){
+void testMatrixHostSGEMMRec(){
     unsigned int m = 4;
     unsigned int n = 3;
     unsigned int k = 3;
@@ -106,7 +114,7 @@ void testHostSGEMMRec(){
     }
 }
 
-void testDeviceSGEMMSquare(){
+void testMatrixDeviceSGEMMSquare(){
     unsigned int m = 1000;
     unsigned int n = 1000;
     unsigned int k = 1000;
@@ -137,7 +145,7 @@ void testDeviceSGEMMSquare(){
     }
 }
 
-void testDeviceSGEMMRec(){
+void testMatrixDeviceSGEMMRec(){
     unsigned int m = 1001;
     unsigned int n = 1000;
     unsigned int k = 1000;
@@ -168,12 +176,22 @@ void testDeviceSGEMMRec(){
     }
 }
 
+void testVectorDefaultCtor(){
+	Vector v{4};
+	std::istringstream correct("[ 0 0 0 0 ]");
+	std::ostringstream result;
+	v.print(result);
+
+	ASSERT_TRUE(correct.str() == result.str());
+}
+
 void run(){
-    testDefaultCtor();
-    testDefaultCtorNonSquare();
-    testAt();
-    testHostSGEMMSquare();
-    testHostSGEMMRec();
-    testDeviceSGEMMSquare();
-    testDeviceSGEMMRec();
+    testMatrixDefaultCtor();
+    testMatrixDefaultCtorNonSquare();
+    testMatrixAt();
+    testMatrixHostSGEMMSquare();
+    testMatrixHostSGEMMRec();
+    testMatrixDeviceSGEMMSquare();
+    testMatrixDeviceSGEMMRec();
+	testVectorDefaultCtor();
 }

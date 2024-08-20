@@ -15,5 +15,10 @@ private:
 		
 public:
 	cudaVector(unsigned int n, float* data);
+
+	void syncHost(float* hostData);
+
+	void syncDevice(float* hostData);
+	
 	~cudaVector();
 };
