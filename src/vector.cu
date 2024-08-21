@@ -12,17 +12,22 @@ Vector::Vector(unsigned int n, float* data): mCuVector{nullptr}, mData(n), mSize
 
 void Vector::syncHost(){
 	if(mState != State::HOST){
+		mState = State::HOST;
 		mCuVector->syncHost(mData.data());
 	}
 }
 
 void Vector::syncDevice(){
 	if(mState != State::DEVICE){
+		mState = State::DEVICE;
 		mCuVector->syncHost(mData.data());
 	}
 }
 
 void Vector::print(std::ostream& os){
+	
+	syncHost();
+
 	os << "[ ";
 
 	for(auto num : mData){

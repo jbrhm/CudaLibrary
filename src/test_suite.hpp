@@ -195,6 +195,22 @@ void testVectorDataCtor(){
 	ASSERT_TRUE(correct.str() == result.str());
 }
 
+void testVectorAdd(){
+	std::vector<float> data(250, 1);
+	Vector v1{static_cast<unsigned int>(data.size()), data.data()};
+	Vector v2{static_cast<unsigned int>(data.size()), data.data()};
+	Vector v3{static_cast<unsigned int>(data.size()), data.data()};
+
+	std::istringstream correct("[ 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 ]");
+	std::ostringstream result;
+
+	Vector::vectorAdd(v1, v2, v3);
+
+	v3.print(result);
+
+	ASSERT_TRUE(correct.str() == result.str());
+}
+
 void run(){
     testMatrixDefaultCtor();
     testMatrixDefaultCtorNonSquare();
@@ -205,4 +221,5 @@ void run(){
     testMatrixDeviceSGEMMRec();
 	testVectorDefaultCtor();
 	testVectorDataCtor();
+	testVectorAdd();
 }
