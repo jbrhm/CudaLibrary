@@ -2,6 +2,7 @@
 #include <vector>
 #include <iostream>
 #include <algorithm>
+#include "immintrin.h"
 
 class cudaVector;
 
@@ -22,7 +23,14 @@ private:
 	State mState;
 
 	//TODO: Tune this threshold
-	constexpr static unsigned int HOST_TO_CUDA_THRESHOLD = 250;
+	constexpr static unsigned int HOST_TO_CUDA_THRESHOLD = 256;
+
+	// AVX
+	constexpr static unsigned int AVX_SIZE = 256;
+	alignas(32) float floatData[256];
+
+	__m256 avxData[32];
+
 public:
 	Vector(unsigned int n);
 
@@ -31,6 +39,8 @@ public:
 	void syncHost();
 
 	void syncDevice();
+
+	void syncAVX();
 
 	void print(std::ostream& os);
 

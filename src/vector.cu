@@ -24,6 +24,16 @@ void Vector::syncDevice(){
 	}
 }
 
+void Vector::syncAVX(){
+	syncHost();
+	if(mState != State::AVX){
+		mState = State::AVX;
+		for(unsigned int i = 0; i < AVX_SIZE; ++i){
+			floatData[i] = (i < mData.size()) ? mData[i] : 0.0;
+		}
+	}
+}
+
 void Vector::print(std::ostream& os){
 	
 	syncHost();
