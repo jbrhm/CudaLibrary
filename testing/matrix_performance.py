@@ -16,7 +16,7 @@ class Backends(Enum):
     cupybara = 1
     torch = 2
 
-backend = Backends.torch
+backend = Backends.cupybara
 
 begin = time.time()
 
