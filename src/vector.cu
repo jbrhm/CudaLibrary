@@ -74,7 +74,9 @@ void Vector::vectorAdd(Vector& vec1, Vector& vec2, Vector& out){
 			){
 			avxAdd(vec1.mAVXVector, vec2.mAVXVector, out.mAVXVector);
 		}else{
-			throw std::runtime_error("NOT SUPPOSED TO BE HERE");
+			for(unsigned int i = 0; i < vec1.mSize; ++i){
+				out.mData[i] = vec1.mData[i] + vec2.mData[i];
+			}
 		}
 	}
 }

@@ -211,23 +211,36 @@ void testVectorAdd(){
 	ASSERT_TRUE(correct.str() == result.str());
 }
 
-void testVectorAVXSync(){
+void testVectorAVXAdd(){
 	std::vector<float> data{1, 3, 4, 4, 4, 5};
 	Vector v1{static_cast<unsigned int>(data.size()), data.data()};
 	Vector v2{static_cast<unsigned int>(data.size()), data.data()};
 
 	Vector out{static_cast<unsigned int>(data.size()), data.data()};
 
-	std::cout << "AVX 1"<< std::endl;
 	v1.syncAVX();
-	std::cout << "AVX 2"<< std::endl;
 	v2.syncAVX();
-	std::cout << "AVX 3"<< std::endl;
 	out.syncAVX();
 
 	Vector::vectorAdd(v1, v2, out);
 
 	out.syncHost();
+
+	std::istringstream correct("[ 2 6 8 8 8 10 ]");
+	std::ostringstream result;
+	out.print(result);
+
+	ASSERT_TRUE(correct.str() == result.str());
+}
+
+void testVectorHostAdd(){
+	std::vector<float> data{1, 3, 4, 4, 4, 5};
+	Vector v1{static_cast<unsigned int>(data.size()), data.data()};
+	Vector v2{static_cast<unsigned int>(data.size()), data.data()};
+
+	Vector out{static_cast<unsigned int>(data.size()), data.data()};
+
+	Vector::vectorAdd(v1, v2, out);
 
 	std::istringstream correct("[ 2 6 8 8 8 10 ]");
 	std::ostringstream result;
@@ -247,5 +260,6 @@ void run(){
 	testVectorDefaultCtor();
 	testVectorDataCtor();
 	testVectorAdd();
-	testVectorAVXSync();
+	testVectorAVXAdd();
+	testVectorHostAdd();
 }
