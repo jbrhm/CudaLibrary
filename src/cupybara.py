@@ -6,6 +6,26 @@ from cupybara.cupybara_paths import CupybaraPaths
   
 lib = CDLL(CupybaraPaths.cupybara_libs) 
 
+# new_matrix
+lib.new_matrix.argtypes = (c_uint, c_uint)
+lib.new_matrix.restype = c_longlong
+
+# new_matrix_data
+lib.new_matrix_from_data.argtypes = (c_uint, c_uint, POINTER(c_float))
+lib.new_matrix_from_data.restype = c_longlong
+# release Matrix data
+lib.matrix_release.argtypes = (c_longlong,)
+
+# sync
+lib.matrix_sync.argtypes = (c_longlong,)
+
+# print
+lib.matrix_print.argtypes = (c_longlong,)
+
+# Multiply
+lib.matrix_multiply.argtypes = (c_longlong, c_longlong, c_longlong)
+lib.matrix_multiply.restype = c_longlong
+
 # load the library 
 class Matrix:
     # This is a pointer to a matrix class in C/C++/CUDA
@@ -16,7 +36,7 @@ class Matrix:
         pass
 
     def __del__(self):
-        lib.release(self.matrix)
+        lib.matrix_release(self.matrix)
     
     # creates an identity matrix
     @classmethod
@@ -35,17 +55,17 @@ class Matrix:
 
     # Prints the current matrix on the CPU
     def print(self):
-        lib.print(self.matrix)
+        lib.matrix_print(self.matrix)
 
     # Syncs the matrix from the GPU to the CPU
     # THIS SHOULD BE DONE BEFORE DOING ANY CPU OPERATIONS like PRINT
     def sync(self):
-        lib.sync(self.matrix)
+        lib.matrix_sync(self.matrix)
 
     # Overloaded Matrix Multiplication
     @staticmethod
     def multiply(A, B, C):
-        lib.multiply(A.matrix, B.matrix, C.matrix)
+        lib.matrix_multiply(A.matrix, B.matrix, C.matrix)
 
 # new_vector
 lib.new_vector.argtypes = (c_uint,)

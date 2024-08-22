@@ -10,13 +10,13 @@ extern "C" {
 	}
 
 	void matrix_sync(unsigned long long matrix){
-		Matrix* matrixP = reinterpret_cast<Matrix*>(matrix);
-		matrixP->syncHost();
+		Matrix* matrixPtr = reinterpret_cast<Matrix*>(matrix);
+		matrixPtr->syncHost();
 	}
 
 	void matrix_print(unsigned long long matrix){
-		Matrix* matrixP = reinterpret_cast<Matrix*>(matrix);
-		matrixP->print();
+		Matrix* matrixPtr = reinterpret_cast<Matrix*>(matrix);
+		matrixPtr->print();
 	}
 
 	void matrix_multiply(unsigned long long A, unsigned long long B, unsigned long long C){
