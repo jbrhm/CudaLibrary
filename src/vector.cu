@@ -1,7 +1,7 @@
 #include "vector.hpp"
 #include "cuda_vector.cuh"
 
-Vector::Vector(unsigned int n) : mCuVector{nullptr}, mData(n), mSize{n} /* Defaults to zero*/, mState{State::HOST} {
+Vector::Vector(unsigned int n) : mCuVector{nullptr}, mAVXVector{nullptr}, mData(n), mSize{n} /* Defaults to zero*/, mState{State::HOST} {
 	mCuVector = new cudaVector(n, mData.data());
 }
 
@@ -24,21 +24,6 @@ void Vector::syncDevice(){
 	}
 }
 
-void Vector::syncAVX(){
-	syncHost();
-	if(mState != State::AVX){
-		mState = State::AVX;
-		// Load the data into aligned array
-		for(unsigned int i = 0; i < AVX_SIZE; ++i){
-			mFloatData[i] = (i < mData.size()) ? mData[i] : 0.0;
-		}
-
-		// Load from aligned array into AVX registers
-		for(unsigned int i = 0; i < AVX_SIZE; i += 8){
-			mAVXData[i/8] = _mm256_load_ps(&mFloatData[i]);
-		}
-	}
-}
 
 void Vector::print(std::ostream& os){
 	

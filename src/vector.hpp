@@ -2,9 +2,9 @@
 #include <vector>
 #include <iostream>
 #include <algorithm>
-#include "immintrin.h"
 
 class cudaVector;
+class avxVector;
 
 class Vector{
 private:	
@@ -15,6 +15,7 @@ private:
 	}; 
 
 	cudaVector* mCuVector;
+	avxVector* mAVXVector;
 
 	std::vector<float> mData;
 
@@ -25,11 +26,6 @@ private:
 	//TODO: Tune this threshold
 	constexpr static unsigned int HOST_TO_CUDA_THRESHOLD = 256;
 
-	// AVX
-	constexpr static unsigned int AVX_SIZE = 256;
-	alignas(32) float mFloatData[256];
-
-	__m256 mAVXData[32];
 
 public:
 	Vector(unsigned int n);
