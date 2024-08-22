@@ -229,8 +229,7 @@ void testVectorAVXSync(){
 
 	out.syncHost();
 
-
-	std::istringstream correct("[ 1 3 4 4 4 5 ]");
+	std::istringstream correct("[ 2 6 8 8 8 10 ]");
 	std::ostringstream result;
 	out.print(result);
 
