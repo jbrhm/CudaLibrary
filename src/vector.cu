@@ -3,17 +3,22 @@
 
 Vector::Vector(unsigned int n) : mCuVector{nullptr}, mAVXVector{nullptr}, mData(n), mSize{n} /* Defaults to zero*/, mState{State::HOST} {
 	mCuVector = new cudaVector(n, mData.data());
+	mAVXVector = AVXVectorFactory(n, mData.data());
 }
 
-Vector::Vector(unsigned int n, float* data): mCuVector{nullptr}, mData(n), mSize{n}, mState{State::HOST} {
+Vector::Vector(unsigned int n, float* data): mCuVector{nullptr}, mAVXVector{nullptr}, mData(n), mSize{n}, mState{State::HOST} {
 	memcpy(mData.data(), data, sizeof(float) * n);
 	mCuVector = new cudaVector(n, mData.data());
+	mAVXVector = AVXVectorFactory(n, mData.data());
 }
 
 void Vector::syncHost(){
-	if(mState != State::HOST){
+	if(mState == State::DEVICE){
 		mState = State::HOST;
 		mCuVector->syncHost(mData.data());
+	}else if(mState == State::AVX){
+		mState = State::AVX;
+		syncHostFromAVX();
 	}
 }
 
@@ -51,8 +56,14 @@ void Vector::vectorAdd(Vector& vec1, Vector& vec2, Vector& out){
 
 		cudaVector::vectorAdd(vec1.mCuVector, vec2.mCuVector, out.mCuVector);
 	}else{
-		//TODO: Implement
-		exit(EXIT_FAILURE);
+		if(	vec1.mState == State::AVX &&
+			vec2.mState == State::AVX &&
+			out.mState == State::AVX
+			){
+			avxAdd(vec1.mAVXVector, vec2.mAVXVector, out.mAVXVector);
+		}else{
+			throw std::runtime_error("NOT SUPPOSED TO BE HERE");
+		}
 	}
 }
 

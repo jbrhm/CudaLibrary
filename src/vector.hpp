@@ -15,7 +15,7 @@ private:
 	}; 
 
 	cudaVector* mCuVector;
-	avxVector* mAVXVector;
+	alignas(32) avxVector* mAVXVector;
 
 	std::vector<float> mData;
 
@@ -36,7 +36,17 @@ public:
 
 	void syncDevice();
 
+	// AVX
+	
+	avxVector* AVXVectorFactory(unsigned int n, float* data);
+	
 	void syncAVX();
+
+	void syncHostFromAVX();
+
+	static void avxAdd(avxVector* v1, avxVector* v2, avxVector* out);
+
+	// AVX
 
 	void print(std::ostream& os);
 

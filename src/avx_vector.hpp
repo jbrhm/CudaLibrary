@@ -1,5 +1,7 @@
 #include "immintrin.h"
 #include <cstring>
+#include <iostream>
+#include <stdlib.h>
 
 class avxVector{
 private:
@@ -9,7 +11,7 @@ private:
 	constexpr static unsigned int AVX_SIZE = 256;
 	constexpr static unsigned int NUM_AVX = 32;
 
-	alignas(32) float mData[AVX_SIZE];
+	float* mData;
 
 	__m256 mAVXData[NUM_AVX];
 
