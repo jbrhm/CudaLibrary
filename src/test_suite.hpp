@@ -196,17 +196,55 @@ void testVectorDataCtor(){
 }
 
 void testVectorAdd(){
-	std::vector<float> data(250, 1);
+	std::vector<float> data(257, 1);
 	Vector v1{static_cast<unsigned int>(data.size()), data.data()};
 	Vector v2{static_cast<unsigned int>(data.size()), data.data()};
 	Vector v3{static_cast<unsigned int>(data.size()), data.data()};
 
-	std::istringstream correct("[ 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 ]");
+	std::istringstream correct("[ 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 ]");
 	std::ostringstream result;
 
 	Vector::vectorAdd(v1, v2, v3);
 
 	v3.print(result);
+
+	ASSERT_TRUE(correct.str() == result.str());
+}
+
+void testVectorAVXAdd(){
+	std::vector<float> data{1, 3, 4, 4, 4, 5};
+	Vector v1{static_cast<unsigned int>(data.size()), data.data()};
+	Vector v2{static_cast<unsigned int>(data.size()), data.data()};
+
+	Vector out{static_cast<unsigned int>(data.size()), data.data()};
+
+	v1.syncAVX();
+	v2.syncAVX();
+	out.syncAVX();
+
+	Vector::vectorAdd(v1, v2, out);
+
+	out.syncHost();
+
+	std::istringstream correct("[ 2 6 8 8 8 10 ]");
+	std::ostringstream result;
+	out.print(result);
+
+	ASSERT_TRUE(correct.str() == result.str());
+}
+
+void testVectorHostAdd(){
+	std::vector<float> data{1, 3, 4, 4, 4, 5};
+	Vector v1{static_cast<unsigned int>(data.size()), data.data()};
+	Vector v2{static_cast<unsigned int>(data.size()), data.data()};
+
+	Vector out{static_cast<unsigned int>(data.size()), data.data()};
+
+	Vector::vectorAdd(v1, v2, out);
+
+	std::istringstream correct("[ 2 6 8 8 8 10 ]");
+	std::ostringstream result;
+	out.print(result);
 
 	ASSERT_TRUE(correct.str() == result.str());
 }
@@ -222,4 +260,6 @@ void run(){
 	testVectorDefaultCtor();
 	testVectorDataCtor();
 	testVectorAdd();
+	testVectorAVXAdd();
+	testVectorHostAdd();
 }

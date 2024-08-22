@@ -4,6 +4,7 @@
 #include <algorithm>
 
 class cudaVector;
+class avxVector;
 
 class Vector{
 private:	
@@ -14,6 +15,7 @@ private:
 	}; 
 
 	cudaVector* mCuVector;
+	alignas(32) avxVector* mAVXVector;
 
 	std::vector<float> mData;
 
@@ -22,7 +24,9 @@ private:
 	State mState;
 
 	//TODO: Tune this threshold
-	constexpr static unsigned int HOST_TO_CUDA_THRESHOLD = 250;
+	constexpr static unsigned int HOST_TO_CUDA_THRESHOLD = 256;
+
+
 public:
 	Vector(unsigned int n);
 
@@ -31,6 +35,20 @@ public:
 	void syncHost();
 
 	void syncDevice();
+
+	// AVX
+	
+	avxVector* AVXVectorFactory(unsigned int n, float* data);
+	
+	void syncAVX();
+
+	void syncHostFromAVX();
+
+	static void avxAdd(avxVector* v1, avxVector* v2, avxVector* out);
+
+	// AVX
+
+	void print(); // Stdout default
 
 	void print(std::ostream& os);
 
