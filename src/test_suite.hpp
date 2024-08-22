@@ -1,6 +1,6 @@
 #pragma once
-#include "matrix.hpp"
-#include "vector.hpp"
+#include "matrix/matrix.hpp"
+#include "vector/vector.hpp"
 #include <iostream>
 #include <exception>
 #include <sstream>
