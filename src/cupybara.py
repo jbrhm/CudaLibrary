@@ -6,26 +6,6 @@ from cupybara.cupybara_paths import CupybaraPaths
   
 lib = CDLL(CupybaraPaths.cupybara_libs) 
 
-# new_matrix
-lib.new_matrix.argtypes = (c_uint, c_uint)
-lib.new_matrix.restype = c_longlong
-
-# new_matrix_data
-lib.new_matrix_from_data.argtypes = (c_uint, c_uint, POINTER(c_float))
-lib.new_matrix_from_data.restype = c_longlong
-# release Matrix data
-lib.release.argtypes = (c_longlong,)
-
-# sync
-lib.sync.argtypes = (c_longlong,)
-
-# print
-lib.print.argtypes = (c_longlong,)
-
-# Multiply
-lib.multiply.argtypes = (c_longlong, c_longlong, c_longlong)
-lib.multiply.restype = c_longlong
-
 # load the library 
 class Matrix:
     # This is a pointer to a matrix class in C/C++/CUDA
@@ -69,11 +49,11 @@ class Matrix:
 
 # new_vector
 lib.new_vector.argtypes = (c_uint,)
-lib.new_matrix.restype = c_longlong
+lib.new_vector.restype = c_longlong
 
 # new_matrix_from_data
 lib.new_vector_from_data.argtypes = (c_uint, POINTER(c_float))
-lib.new_matrix_from_data.restype = c_longlong
+lib.new_vector_from_data.restype = c_longlong
 
 # release vector data
 lib.vector_release.argtypes = (c_longlong,)
