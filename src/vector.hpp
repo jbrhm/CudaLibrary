@@ -27,9 +27,9 @@ private:
 
 	// AVX
 	constexpr static unsigned int AVX_SIZE = 256;
-	alignas(32) float floatData[256];
+	alignas(32) float mFloatData[256];
 
-	__m256 avxData[32];
+	__m256 mAVXData[32];
 
 public:
 	Vector(unsigned int n);

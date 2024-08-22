@@ -28,8 +28,14 @@ void Vector::syncAVX(){
 	syncHost();
 	if(mState != State::AVX){
 		mState = State::AVX;
+		// Load the data into aligned array
 		for(unsigned int i = 0; i < AVX_SIZE; ++i){
-			floatData[i] = (i < mData.size()) ? mData[i] : 0.0;
+			mFloatData[i] = (i < mData.size()) ? mData[i] : 0.0;
+		}
+
+		// Load from aligned array into AVX registers
+		for(unsigned int i = 0; i < AVX_SIZE; i += 8){
+			mAVXData[i/8] = _mm256_load_ps(&mFloatData[i]);
 		}
 	}
 }

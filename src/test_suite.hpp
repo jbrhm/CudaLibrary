@@ -211,6 +211,14 @@ void testVectorAdd(){
 	ASSERT_TRUE(correct.str() == result.str());
 }
 
+void testVectorAVXSync(){
+	std::vector<float> data{1, 3, 4, 4, 4, 5};
+	Vector v1{static_cast<unsigned int>(data.size()), data.data()};
+	Vector v2{static_cast<unsigned int>(data.size()), data.data()};
+
+	v1.syncAVX();
+}
+
 void run(){
     testMatrixDefaultCtor();
     testMatrixDefaultCtorNonSquare();
