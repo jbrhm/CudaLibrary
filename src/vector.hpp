@@ -48,6 +48,8 @@ public:
 
 	// AVX
 
+	void print(); // Stdout default
+
 	void print(std::ostream& os);
 
 	static void vectorAdd(Vector& vec1, Vector& vec2, Vector& out);

@@ -29,6 +29,18 @@ void Vector::syncDevice(){
 	}
 }
 
+void Vector::print(){
+	
+	syncHost();
+
+	std::cout << "[ ";
+
+	for(auto num : mData){
+		std::cout << num << ' ';
+	}
+
+	std::cout << ']';
+}
 
 void Vector::print(std::ostream& os){
 	
