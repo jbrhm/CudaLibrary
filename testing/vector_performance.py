@@ -4,20 +4,27 @@ from cupybara.cupybara import Vector
 import time
 from enum import Enum
 
+class Backends(Enum):
+    host = 1
+    avx = 2
+
+backend = Backends.avx
+
 SIZE = 200
 
-ITERATIONS = 1000
-
-begin = time.time()
+ITERATIONS = 10000
 
 vec1 = Vector.zeros(SIZE)
 vec2 = Vector.zeros(SIZE)
 vec3 = Vector.zeros(SIZE)
 
 # Sync the vectors to AVX
-vec1.syncAVX()
-vec2.syncAVX()
-vec3.syncAVX()
+if backend == Backends.avx:
+    vec1.syncAVX()
+    vec2.syncAVX()
+    vec3.syncAVX()
+
+begin = time.time()
 
 # Do the multiplications
 for i in range(0, ITERATIONS):

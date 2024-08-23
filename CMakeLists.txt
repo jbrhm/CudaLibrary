@@ -3,8 +3,8 @@ cmake_minimum_required(VERSION 3.28)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 #set(CMAKE_CUDA_COMPILER "/usr/local/cuda-12.3/bin/nvcc")
-set(CMAKE_CXX_COMPILER "/usr/bin/clang++")
-set(CMAKE_C_COMPILER "/usr/bin/clang")
+#set(CMAKE_CXX_COMPILER "/usr/bin/clang++")
+#set(CMAKE_C_COMPILER "/usr/bin/clang")
 set(CMAKE_CUDA_FLAGS -allow-unsupported-compiler)
 
 project(cupybara 
@@ -26,7 +26,7 @@ target_include_directories(cupybaraTest PRIVATE utils/)
 
 target_link_libraries(cupybaraTest PRIVATE cublas)
 
-target_compile_options(cupybaraTest PUBLIC -g3 -mtune=generic -march=znver2)
+target_compile_options(cupybaraTest PUBLIC -g3 -mtune=generic -march=native)
 
 # Shared Library
 

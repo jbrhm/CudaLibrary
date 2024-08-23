@@ -27,6 +27,13 @@ Pytorch Python Front End:
 Cupybara CUDA Back End:
 421354 GFLOPS
 
+**Performance Measured On 200x1 Vectors**
+Cupybara Python Front End AVX:
+2.755241411022795e-06 GFLOPS
+
+Pytorch Python Front End:
+1.6040844970771753e-06 GFLOPS
+
 ## Uninstall
 - Run `pip uninstall cupybara`
 - Run `sudo apt remove cupybara`
