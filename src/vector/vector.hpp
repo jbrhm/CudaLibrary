@@ -16,7 +16,6 @@ private:
 
 	cudaVector* mCuVector;
 	alignas(32) avxVector* mAVXVector;
-
 	std::vector<float> mData;
 
 	unsigned int mSize;
@@ -26,6 +25,12 @@ private:
 	//TODO: Tune this threshold
 	constexpr static unsigned int HOST_TO_CUDA_THRESHOLD = 256;
 
+	// Private Functions
+	avxVector* AVXVectorFactory(unsigned int n, float* data);
+
+	void syncHostFromAVX();
+
+	static void avxAdd(avxVector* v1, avxVector* v2, avxVector* out);
 
 public:
 	Vector(unsigned int n);
@@ -36,19 +41,9 @@ public:
 
 	void syncDevice();
 
-	// AVX
-	
-	avxVector* AVXVectorFactory(unsigned int n, float* data);
-	
 	void syncAVX();
 
-	void syncHostFromAVX();
-
-	static void avxAdd(avxVector* v1, avxVector* v2, avxVector* out);
-
-	// AVX
-
-	void print(); // Stdout default
+	void print();
 
 	void print(std::ostream& os);
 

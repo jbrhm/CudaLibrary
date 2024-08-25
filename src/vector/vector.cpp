@@ -1,6 +1,11 @@
 #include "vector.hpp"
 #include "avx_vector.hpp"
 
+/**
+ *  Here is where all AVX related code is defined to avoid nvcc compiling #include "immintrin.h"
+**/
+
+
 avxVector* Vector::AVXVectorFactory(unsigned int n, float* data){
 	return new avxVector(n, data);
 }
