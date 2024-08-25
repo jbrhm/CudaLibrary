@@ -25,3 +25,8 @@ void Vector::syncHostFromAVX(){
 void Vector::avxAdd(avxVector* v1, avxVector* v2, avxVector* out){
 	avxVector::vectorAdd(v1, v2, out);
 }
+
+void Vector::freeAVXVector(avxVector* vector){
+	// Since the avxVector is not fully defined in vector.cu it doesn't know about the destructor
+	delete vector;
+}

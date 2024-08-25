@@ -30,6 +30,8 @@ private:
 
 	void syncHostFromAVX();
 
+	void freeAVXVector(avxVector* vector);
+
 	static void avxAdd(avxVector* v1, avxVector* v2, avxVector* out);
 
 public:

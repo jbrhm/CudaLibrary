@@ -82,5 +82,6 @@ void Vector::vectorAdd(Vector& vec1, Vector& vec2, Vector& out){
 }
 
 Vector::~Vector(){
-
+	delete mCuVector;
+	freeAVXVector(mAVXVector); //TODO: This should be better
 }
