@@ -32,3 +32,8 @@ void avxVector::vectorAdd(avxVector* v1, avxVector* v2, avxVector* out){
 		out->mAVXData[i] = _mm256_add_ps(v1->mAVXData[i], v2->mAVXData[i]);
 	}
 }
+
+avxVector::~avxVector(){
+	delete mData;
+	delete mAVXData;
+}
