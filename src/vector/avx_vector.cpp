@@ -34,6 +34,6 @@ void avxVector::vectorAdd(avxVector* v1, avxVector* v2, avxVector* out){
 }
 
 avxVector::~avxVector(){
-	delete mData;
-	delete mAVXData;
+	free(mData);
+	free(mAVXData);
 }

@@ -7,7 +7,8 @@ Vector::Vector(unsigned int n) : mCuVector{nullptr}, mAVXVector{nullptr}, mData(
 }
 
 Vector::Vector(unsigned int n, float* data): mCuVector{nullptr}, mAVXVector{nullptr}, mData(n), mSize{n}, mState{State::HOST} {
-	memcpy(mData.data(), data, sizeof(float) * n);
+	std::cout << mData.size() << std::endl;
+	std::memcpy(mData.data(), data, sizeof(float) * n);
 	mCuVector = new cudaVector(n, mData.data());
 	mAVXVector = AVXVectorFactory(n, mData.data());
 }
@@ -83,5 +84,5 @@ void Vector::vectorAdd(Vector& vec1, Vector& vec2, Vector& out){
 
 Vector::~Vector(){
 	delete mCuVector;
-	freeAVXVector(mAVXVector); //TODO: This should be better
+	//freeAVXVector(mAVXVector);
 }
