@@ -4,8 +4,6 @@
 </p>
 
 ## Installation
-- Prerequisites:
-- CMake **>=3.28** (you may have to install the kitware gpg key)
 - Clone and `cd` into the repo
 - `chmod +x ./build.sh`
 - `./build.sh`

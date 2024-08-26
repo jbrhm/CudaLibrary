@@ -213,9 +213,8 @@ void testVectorAdd(){
 
 void testVectorAVXAdd(){
 	std::vector<float> data{1, 3, 4, 4, 4, 5};
-	std::vector<float> data2{1, 3, 4, 4, 4, 5};
 	Vector v1{static_cast<unsigned int>(data.size()), data.data()};
-	Vector v2{static_cast<unsigned int>(data2.size()), data2.data()};
+	Vector v2{static_cast<unsigned int>(data.size()), data.data()};
 
 	Vector out{static_cast<unsigned int>(data.size()), data.data()};
 
@@ -251,16 +250,16 @@ void testVectorHostAdd(){
 }
 
 void run(){
-    //testMatrixDefaultCtor();
-    //testMatrixDefaultCtorNonSquare();
-    //testMatrixAt();
-    //testMatrixHostSGEMMSquare();
-    //testMatrixHostSGEMMRec();
-    //testMatrixDeviceSGEMMSquare();
-    //testMatrixDeviceSGEMMRec();
-	//testVectorDefaultCtor();
-	//testVectorDataCtor();
+    testMatrixDefaultCtor();
+    testMatrixDefaultCtorNonSquare();
+    testMatrixAt();
+    testMatrixHostSGEMMSquare();
+    testMatrixHostSGEMMRec();
+    testMatrixDeviceSGEMMSquare();
+    testMatrixDeviceSGEMMRec();
+	testVectorDefaultCtor();
+	testVectorDataCtor();
 	testVectorAdd();
-	//testVectorAVXAdd();
-	//testVectorHostAdd();
+	testVectorAVXAdd();
+	testVectorHostAdd();
 }
