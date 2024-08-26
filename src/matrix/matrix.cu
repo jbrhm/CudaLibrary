@@ -2,7 +2,7 @@
 
 #include "cuda_matrix.cuh"
 
-Matrix::Matrix(unsigned int M, unsigned int N) : mState{State::HOST}, mCuMatrix{nullptr}, mM{M}, mN{N}, mMatrix{static_cast<float*>(malloc(mM * mN * sizeof(float)))} {
+Matrix::Matrix(unsigned int M, unsigned int N) : mState{State::HOST}, mCuMatrix{nullptr}, mM{M}, mN{N}, mMatrix{new float[mM * mN]} {
 	// Init the Identity Matrix
 	for(int row = 0; row < mM; ++row){
 		for(int col = 0; col < mN; ++col){
@@ -14,7 +14,7 @@ Matrix::Matrix(unsigned int M, unsigned int N) : mState{State::HOST}, mCuMatrix{
 	mCuMatrix = new cudaMatrix(mM, mN, mMatrix);
 }
 
-Matrix::Matrix(unsigned int M, unsigned int N, float* data) : mState{State::HOST}, mCuMatrix{nullptr}, mM{M}, mN{N}, mMatrix{static_cast<float*>(malloc(mM * mN * sizeof(float)))} {
+Matrix::Matrix(unsigned int M, unsigned int N, float* data) : mState{State::HOST}, mCuMatrix{nullptr}, mM{M}, mN{N}, mMatrix{new float[mM * mN]} {
 	// Init the Identity Matrix
 	for(int row = 0; row < mM; ++row){
 		for(int col = 0; col < mN; ++col){
@@ -31,7 +31,8 @@ pair<unsigned int, unsigned int> Matrix::getSize() const{
 }
 
 Matrix::~Matrix(){
-	free(mMatrix);
+	delete mMatrix;
+	delete mCuMatrix;
 }
 
 float& Matrix::at(unsigned int row, unsigned int col){
@@ -123,5 +124,4 @@ void Matrix::print() {
 		}
 		std::cout << '\n';
 	}
-
 }
