@@ -7,7 +7,7 @@
 #include <string>
 #include <chrono>
 
-#include "loop_profiler.hpp"
+#include "loop_profiler.cuh"
 
 class cudaMatrix {
 private:

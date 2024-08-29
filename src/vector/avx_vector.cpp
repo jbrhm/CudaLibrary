@@ -1,7 +1,7 @@
 #include "avx_vector.hpp"
 
 // aligned_alloc(32, sizeof(float) * AVX_SIZE)) is used because this itself is aligned
-avxVector::avxVector(unsigned int n, float* data) : mSize{n}, mData{reinterpret_cast<float*>(aligned_alloc(32, sizeof(float) * AVX_SIZE))}{
+avxVector::avxVector(unsigned int n, float* data) : mSize{n}, AVX_SIZE{(mSize % 8 == 0) ? mSize : (mSize + (8 - (mSize % 8)))}, NUM_AVX{AVX_SIZE/8}, mData{reinterpret_cast<float*>(aligned_alloc(32, sizeof(float) * AVX_SIZE))}, mAVXData{reinterpret_cast<__m256*>(aligned_alloc(32, sizeof(__m256) * NUM_AVX))}{
 	syncAVX(data);
 }
 
@@ -28,7 +28,7 @@ void avxVector::syncHost(float* hostData){
 }
 
 void avxVector::vectorAdd(avxVector* v1, avxVector* v2, avxVector* out){
-	for(unsigned int i = 0; i < NUM_AVX; ++i){
+	for(unsigned int i = 0; i < v1->NUM_AVX; ++i){
 		out->mAVXData[i] = _mm256_add_ps(v1->mAVXData[i], v2->mAVXData[i]);
 	}
 }

@@ -8,12 +8,12 @@ private:
 	unsigned int mSize;
 
 	// AVX
-	constexpr static unsigned int AVX_SIZE = 256;
-	constexpr static unsigned int NUM_AVX = 32;
+	unsigned int AVX_SIZE;
+	unsigned int NUM_AVX;
 
 	float* mData;
 
-	__m256 mAVXData[NUM_AVX];
+	__m256* mAVXData;
 
 public:
 	avxVector(unsigned int n, float* data);
