@@ -8,8 +8,8 @@ private:
 	unsigned int mSize;
 
 	// AVX
-	constexpr static unsigned int AVX_SIZE = 256;
-	constexpr static unsigned int NUM_AVX = 32;
+	unsigned int AVX_SIZE;
+	unsigned int NUM_AVX;
 
 	float* mData;
 
