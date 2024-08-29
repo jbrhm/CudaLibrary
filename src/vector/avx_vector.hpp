@@ -13,7 +13,7 @@ private:
 
 	float* mData;
 
-	__m256 mAVXData[NUM_AVX];
+	__m256* mAVXData;
 
 public:
 	avxVector(unsigned int n, float* data);

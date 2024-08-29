@@ -213,7 +213,9 @@ void testVectorAdd(){
 
 void testVectorAVXAdd(){
 	std::vector<float> data{1, 3, 4, 4, 4, 5};
+
 	Vector v1{static_cast<unsigned int>(data.size()), data.data()};
+
 	Vector v2{static_cast<unsigned int>(data.size()), data.data()};
 
 	Vector out{static_cast<unsigned int>(data.size()), data.data()};
