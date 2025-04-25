@@ -1,6 +1,7 @@
 #pragma once
 #include "matrix/matrix.hpp"
 #include "vector/vector.hpp"
+#include "scan/scan.hpp"
 #include <iostream>
 #include <exception>
 #include <sstream>
@@ -275,6 +276,14 @@ void testVectorHostAdd(){
 	ASSERT_TRUE(correct.str() == result.str());
 }
 
+void testScan(){
+    std::vector<int> data = {1, 4, 5, 6, 9};
+
+    scan s(data.data(), data.size());
+
+    s.print();
+}
+
 void run(){
     testMatrixDefaultCtor();
     testMatrixDefaultCtorNonSquare();
@@ -288,4 +297,5 @@ void run(){
 	testVectorAdd();
 	testVectorAVXAdd();
 	testVectorHostAdd();
+    testScan();
 }
